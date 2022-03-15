@@ -1,8 +1,29 @@
+import { lazy, Suspense } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import AppLayout from './components/layout/AppLayout';
+import HomePage from './pages/home/HomePage';
+
+const SearchPage = lazy(() => import('./pages/search/SearchPage'));
+const CollectionsPage = lazy(() =>
+  import('./pages/collections/CollectionsPage')
+);
+const PlaylistPage = lazy(() => import('./pages/playlist/PlaylistPage'));
+const TracksPage = lazy(() => import('./pages/tracks/TracksPage'));
+
 function App() {
   return (
-    <div className='App bg-slate-800 h-screen'>
-      Ready to start with Spotify!!!
-    </div>
+    <Suspense fallback={<p>Loading...</p>}>
+      <Routes>
+        <Route path='/' element={<AppLayout />}>
+          <Route path='' element={<HomePage />} />
+          <Route path='search' element={<SearchPage />} />
+          <Route path='collections' element={<CollectionsPage />} />
+          <Route path='playlist' element={<PlaylistPage />} />
+          <Route path='tracks' element={<TracksPage />} />
+        </Route>
+        <Route path='*' element={<Navigate replace to='/' />} />
+      </Routes>
+    </Suspense>
   );
 }
 
