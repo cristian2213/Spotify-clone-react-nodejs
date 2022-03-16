@@ -2,14 +2,142 @@
 @tailwind components;
 @tailwind utilities;
 
+/* font-weight: 100; THIN (x) */
+/* font-weight: 200; Extra Light (Ultra Light) (x)  */
+/* font-weight: 300; Light (x) */
+/* font-weight: 400;  NORMAL (x) */
+/* font-weight: 500; MEDIUM (x) */
+/* font-weight: 700; BOLD (x) */
+/* font-weight: 900; BLACK */
+
+/* THIN - THIN-Italic (Beginning) */
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/Gotham-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/Gotham-ThinItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+}
+/* THIN - THIN-Italic (End) */
+
+/* EXTRA-LIGHT - EXTRA-LIGHT-Italic (Beginning) */
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/Gotham-XLight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/Gotham-XLightItalic.otf') format('opentype');
+  font-weight: 200;
+  font-style: italic;
+}
+/* EXTRA-LIGHT - EXTRA-LIGHT-Italic (End) */
+
+/* LIGHT  */
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/Gotham-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+/* LIGHT  (End) */
+
+/* NORMAL - NORMAL-ITALIC (Beginning)  */
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/GothamBook.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/GothamBookItalic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+/* NORMAL - NORMAL-ITALIC (End) */
+
+/* MEDIUM - MEDIUM-ITALIC (Beginning)  */
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/GothamMedium.ttf') format('truetype'),
+    url('./fonts/GothamMedium_1.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/GothamMediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+/* MEDIUM - MEDIUM-ITALIC (End) */
+
+/* BOLD - BOLD-Italic (Beginning) */
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/Gotham-Bold.otf') format('opentype'),
+    url('./fonts/GothamBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/GothamBoldItalic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: 700;
+}
+/* BOLD - BOLD-Italic (End) */
+
+/* BLACK */
+@font-face {
+  font-family: 'Gotham';
+  src: url('./fonts/Gotham-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+/* BLACK (End) */
 
 @layer base {
-    html {
-      /* font-family: 'Roboto', sans-serif; */
-    }
-  
-    body {
-      color: theme('colors.slate.50');
-      overflow-x: hidden;
-    }
+  html {
+    font-family: 'Gotham', sans-serif;
+    font-weight: 400;
+  }
+
+  body {
+    color: theme('colors.slate.50');
+    overflow-x: hidden;
+  }
 }
+/* w-full bg-gradient-to-t from-[#121212] to-[#212121 */
+/* 
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(#212121, #121212);
+}
+
+body::-webkit-scrollbar-button {
+  height: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  outline: none;
+  scroll-behavior: smooth;
+} */

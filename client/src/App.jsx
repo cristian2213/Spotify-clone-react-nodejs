@@ -1,14 +1,18 @@
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import AppLayout from './components/layout/AppLayout';
 import HomePage from './pages/home/HomePage';
 
-const SearchPage = lazy(() => import('./pages/search/SearchPage'));
-const CollectionsPage = lazy(() =>
-  import('./pages/collections/CollectionsPage')
-);
-const PlaylistPage = lazy(() => import('./pages/playlist/PlaylistPage'));
-const TracksPage = lazy(() => import('./pages/tracks/TracksPage'));
+import SearchPage from './pages/search/SearchPage';
+import CollectionsPage from './pages/collections/CollectionsPage';
+import PlaylistPage from './pages/playlist/PlaylistPage';
+import TracksPage from './pages/tracks/TracksPage';
+// const SearchPage = lazy(() => import('./pages/search/SearchPage'));
+// const CollectionsPage = lazy(() =>
+//   import('./pages/collections/CollectionsPage')
+// );
+// const PlaylistPage = lazy(() => import('./pages/playlist/PlaylistPage'));
+// const TracksPage = lazy(() => import('./pages/tracks/TracksPage'));
 
 function App() {
   return (
