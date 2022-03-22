@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 function NavItem({ icon, name, to = '/' }) {
   return (
-    <li className='text-[#b3b3b3] text-[14px] font-bold '>
+    <li className='text-[#b3b3b3] text-[14px] font-bold hover:text-white transition-all'>
       <NavLink
         to={to}
         className={({ isActive }) => (isActive ? 'text-white' : '')}
