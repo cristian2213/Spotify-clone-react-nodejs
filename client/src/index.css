@@ -126,8 +126,7 @@
   .card-play-button {
     @apply absolute
       bottom-2
-      right-2
-    ;
+      right-2;
   }
 }
 
@@ -152,3 +151,8 @@
     grid-gap: 1.5rem;
   }
 }
+/* input[type='range']::-webkit-slider-thumb {
+  height: 2px;
+  width: 2px;
+  background: red;
+} */

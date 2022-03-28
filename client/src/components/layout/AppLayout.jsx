@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import LeftNavigation from './leftNavegation/LeftNavigation';
 import TopNavigationBar from './topNavegation/TopNavigationBar';
+import Player from './player/Player';
 
 function AppLayout() {
   return (
@@ -15,7 +16,7 @@ function AppLayout() {
         </main>
       </div>
 
-      <div className='h-[90px] bg-gray-800'>Player</div>
+      <Player />
     </div>
   );
 }
