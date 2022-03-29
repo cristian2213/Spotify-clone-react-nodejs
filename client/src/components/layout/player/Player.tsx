@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import PlayerAlbum from './PlayerAlbum';
 import AudioControls from './AudioControls ';
 import AudioOptions from './AudioOptions';
@@ -13,7 +13,7 @@ import AudioOptions from './AudioOptions';
 function Player() {
   // State
   const [trackIndex, setTrackIndex] = useState(0);
-  const [trackProgress, setTrackProgress] = useState(0);
+  // const [trackPro}gress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   //   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,7 +30,7 @@ function Player() {
       title: 'Saves The Day #2',
       artist: 'Lekkerboy',
       audioSrc: './assets/song2.mp3',
-      image: './assets/metal.jpg',
+      image: './assets/metal2.jpg',
       color: '#000',
     },
   ];
@@ -76,7 +76,7 @@ function Player() {
 
   return (
     <div className='h-[90px] bg-gray-800 flex flex-row justify-between items-center px-4'>
-      <PlayerAlbum title={title} artist={artist} image={image} />
+      <PlayerAlbum title={title} artist={artist} image={image} color={color} />
       <AudioControls
         isPlaying={isPlaying}
         onPrevClick={toPrevTrack}

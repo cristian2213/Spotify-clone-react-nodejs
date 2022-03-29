@@ -1,4 +1,5 @@
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+
 function TopNavigationControlls() {
   return (
     <div className='flex flex-row items-center gap-4'>

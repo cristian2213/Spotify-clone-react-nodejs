@@ -1,6 +1,10 @@
 import ListAlbums from './ListAlbums';
 
-function AlbumsSections({ sections }) {
+interface IProps {
+  sections: Array<any>;
+}
+
+function AlbumsSections({ sections }: IProps) {
   return (
     <>
       {sections.map((section) => (

@@ -1,4 +1,8 @@
-function DropDownIcon({ setArrowDirection }) {
+interface IProps {
+  setArrowDirection: string;
+}
+
+function DropDownIcon({ setArrowDirection }: IProps) {
   return (
     <svg
       className={`w-5 h-5 ${setArrowDirection}`}

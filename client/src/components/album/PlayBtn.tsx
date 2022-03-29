@@ -1,4 +1,8 @@
-function PlayBtn({ classes }) {
+interface IProps {
+  classes: string;
+}
+
+function PlayBtn({ classes }: IProps) {
   return (
     <div
       className={`card-play-button bg-[#1ed760] w-12 h-12 rounded-full flex items-center justify-center hover:bg-[#1fdf64] hover:scale-105 ${classes}`}

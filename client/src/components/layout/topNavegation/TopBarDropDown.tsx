@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import DropDown from '../../dropDown/DropDown';
 import DropDownList from '../../dropDown/DropDownList';
@@ -19,18 +19,13 @@ function TopBarDropDown() {
       />
 
       <DropDownList showMenu={showMenu}>
-        <DropDownItem
-          name='Account'
-          icon='Icon'
-          Icon={<FaExternalLinkAlt size={16} />}
-        />
-        <DropDownItem name='Profile' icon='Icon' />
+        <DropDownItem name='Account' Icon={<FaExternalLinkAlt size={16} />} />
+        <DropDownItem name='Profile' />
         <DropDownItem
           name='Upgrade to Premium'
-          icon='Icon'
           Icon={<FaExternalLinkAlt size={16} />}
         />
-        <DropDownItem name='Log out' icon='Icon' />
+        <DropDownItem name='Log out' />
       </DropDownList>
     </div>
   );

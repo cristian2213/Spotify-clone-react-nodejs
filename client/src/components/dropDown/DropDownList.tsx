@@ -1,4 +1,9 @@
-function DropDownList({ showMenu, children }) {
+interface IProps {
+  showMenu: string;
+  children: JSX.Element[] | JSX.Element;
+}
+
+function DropDownList({ showMenu, children }: IProps) {
   return (
     <div
       className='p-1'

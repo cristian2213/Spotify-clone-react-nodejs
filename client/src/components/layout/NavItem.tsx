@@ -1,6 +1,12 @@
 import { NavLink } from 'react-router-dom';
 
-function NavItem({ icon, name, to = '/' }) {
+interface IProps {
+  readonly icon: JSX.Element;
+  readonly name: string;
+  readonly to?: string;
+}
+
+function NavItem({ icon, name, to = '/' }: IProps) {
   return (
     <li className='text-[#b3b3b3] text-[14px] font-bold hover:text-white transition-all'>
       <NavLink

@@ -2,7 +2,14 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsHeart, BsFillHeartFill, BsPip } from 'react-icons/bs';
 
-function PlayerAlbum({ title, artist, image }) {
+interface IProps {
+  readonly title: string;
+  readonly artist: string;
+  readonly image: string;
+  readonly color: string;
+}
+
+function PlayerAlbum({ title, artist, image }: IProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isOnScreen, setIsOnScreen] = useState(false);
 
@@ -18,7 +25,7 @@ function PlayerAlbum({ title, artist, image }) {
     <div className='flex flex-row gap-4'>
       <div className='cursor-pointer relative'>
         <img
-          className='block w-14 h-14 rounded object-cover'
+          className='block min-w-[56px] min-h-[56px] max-w-[56px] max-h-[56px] rounded object-cover object-center'
           src={image}
           alt={`track artwork for ${title} by ${artist}`}
         />

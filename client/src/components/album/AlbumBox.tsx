@@ -1,12 +1,18 @@
+import { MouseEvent } from 'react';
 import { useState } from 'react';
 import PlayBtn from './PlayBtn';
 
-function AlbumBox({ singer }) {
+interface IProps {
+  singer: any;
+}
+
+function AlbumBox({ singer }: IProps) {
   const [isHover, setHover] = useState(false);
-  const handleMouseOn = (event) => {
+
+  const handleMouseOn = (event: MouseEvent<HTMLLIElement>) => {
     setHover(true);
   };
-  const handleMouseOut = (event) => {
+  const handleMouseOut = (event: MouseEvent<HTMLLIElement>) => {
     setHover(false);
   };
 

@@ -3,12 +3,19 @@ import { BsFillSkipStartFill, BsFillSkipEndFill } from 'react-icons/bs';
 import { FaRandom } from 'react-icons/fa';
 import { TiArrowRepeat } from 'react-icons/ti';
 
+interface IProps {
+  readonly isPlaying: boolean;
+  readonly onPlayPauseClick: (arg: boolean) => void;
+  readonly onPrevClick: () => void;
+  readonly onNextClick: () => void;
+}
+
 function AudioControls({
   isPlaying,
   onPlayPauseClick,
   onPrevClick,
   onNextClick,
-}) {
+}: IProps) {
   return (
     <div className='flex flex-col justify-center items-center w-full'>
       <div className='audio-controls text-black flex flex-row items-center gap-4'>
@@ -25,10 +32,12 @@ function AudioControls({
         {isPlaying ? (
           <button
             type='button'
-            className='pause'
+            className='pause text-white'
             onClick={() => onPlayPauseClick(false)}
             aria-label='Pause'
-          ></button>
+          >
+            Pause
+          </button>
         ) : (
           <GoPlay
             className='text-white'

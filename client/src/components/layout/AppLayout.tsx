@@ -1,4 +1,3 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import LeftNavigation from './leftNavegation/LeftNavigation';
 import TopNavigationBar from './topNavegation/TopNavigationBar';

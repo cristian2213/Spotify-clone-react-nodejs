@@ -1,6 +1,10 @@
 import AlbumBox from './AlbumBox';
 
-function ListAlbums({ singers }) {
+interface IProps {
+  singers: Array<any>;
+}
+
+function ListAlbums({ singers }: IProps) {
   const LIMIT = 36;
   const leakedSingers = singers.map((singer) => {
     const description = singer.artist.substring(0, LIMIT);

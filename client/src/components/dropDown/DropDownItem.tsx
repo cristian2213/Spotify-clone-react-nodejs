@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
 
-function DropDownItem({ name, to = '/', Icon = null }) {
+interface IProps {
+  name: string;
+  to?: string;
+  Icon?: JSX.Element;
+}
+
+function DropDownItem({ name, to = '/', Icon }: IProps) {
   return (
     <li className='list-none h-10'>
       <Link
