@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 import envs from './config/env/envs';
 import env from './config/env/config';
@@ -7,8 +10,8 @@ import envValidation from './config/env/envValidation';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './test-service/auth.module';
+import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 
 @Module({
   imports: [
@@ -18,12 +21,22 @@ import { AuthModule } from './auth/auth.module';
       isGlobal: true,
       validationSchema: envValidation,
     }),
-
-    DatabaseModule,
-
-    UsersModule,
-
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()], // TO WORK WITH SANBOX
+      typePaths: ['./**/*.graphql'],
+      transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
+      installSubscriptionHandlers: true,
+      debug: true,
+      cors: true,
+      // {
+      //   origin: 'http://localhost:8080',
+      //   credentials: false,
+      // },
+    }),
     AuthModule,
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
