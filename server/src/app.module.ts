@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import { join } from 'path';
 
 import envs from './config/env/envs';
 import env from './config/env/config';
@@ -10,8 +11,7 @@ import envValidation from './config/env/envValidation';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
-import { AuthModule } from './test-service/auth.module';
-import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,16 +24,19 @@ import { upperDirectiveTransformer } from './common/directives/upper-case.direct
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()], // TO WORK WITH SANBOX
+      // TO WORK WITH SANBOX
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      // PATH TO MY SCHEMAS
       typePaths: ['./**/*.graphql'],
-      transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
       installSubscriptionHandlers: true,
       debug: true,
       cors: true,
-      // {
-      //   origin: 'http://localhost:8080',
-      //   credentials: false,
-      // },
+
+      // GENERATE ALL TYPE FROM MY "GRAPHQL" SCHEMAS - IMPORTANT! THIS WON'T UPDATE THE TYPE IN THE FILE graphql.schema.ts, TO DO IT, PLEASE RUN "npm run gpql:watch"
+      definitions: {
+        path: join(process.cwd(), 'src/graphql.schema.ts'),
+        outputAs: 'class',
+      },
     }),
     AuthModule,
     DatabaseModule,

@@ -1,7 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
-import { CreateAuthInput } from './dto/create-auth.input';
-import { UpdateAuthInput } from './dto/update-auth.input';
+import { CreateAuthInput, UpdateAuthInput } from '../graphql.schema';
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -27,7 +26,7 @@ export class AuthResolver {
     @Args('id') id: number,
     @Args('updateAuthInput') updateAuthInput: UpdateAuthInput,
   ) {
-    return this.authService.update(updateAuthInput.id, updateAuthInput);
+    return this.authService.update(id, updateAuthInput);
   }
 
   @Mutation('removeAuth')
