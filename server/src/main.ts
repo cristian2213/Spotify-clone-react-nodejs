@@ -1,12 +1,13 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { VersioningType } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import { ValidationPipe, VersioningType } from '@nestjs/common'
 
 async function bootstrap() {
   /* ********* MAIN APP *********** */
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule)
   /* **************  ************** */
+  app.useGlobalPipes(new ValidationPipe())
 
   /* ********* SWAGGER DOCs **********/
   const config = new DocumentBuilder()
@@ -14,16 +15,16 @@ async function bootstrap() {
     .setDescription('Api clone wiht Nestjs, React, and GraphQL')
     .setVersion('1.0')
     .addBearerAuth({ in: 'header', type: 'http' })
-    .build();
+    .build()
 
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('docs', app, document, {
     explorer: true,
     swaggerOptions: {
       filter: true,
       showRequestDuration: true,
     },
-  });
+  })
   /* **************  ************** */
 
   /* ********* API VERSION **********/
@@ -31,15 +32,15 @@ async function bootstrap() {
     type: VersioningType.URI,
     prefix: 'v',
     defaultVersion: '1',
-  });
+  })
   /* **************  ************** */
 
   /* ********* MAIN APP *********** */
-  await app.listen(process.env.APP_PORT || 3000);
+  await app.listen(process.env.APP_PORT || 3000)
   /* **************  ************** */
 
   /* ********* ENABLE CORS *********** */
-  app.enableCors();
+  app.enableCors()
   /* **************  ************** */
 }
-bootstrap();
+bootstrap()

@@ -1,46 +1,43 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthInput, UpdateAuthInput } from '../graphql.schema';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { UsersService } from '../users/users.service'
+import { compare } from 'bcrypt'
+import { UserInputError } from 'apollo-server-express'
+import { User, LoginResponse } from '../graphql.schema'
+import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
 export class AuthService {
-  auths: Array<any> = [
-    {
-      id: 1,
-      name: 'default',
-      exampleField: 1,
-    },
-  ];
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
-  create(createAuthInput: CreateAuthInput) {
-    this.auths.push(createAuthInput);
-    return createAuthInput;
+  async validateUser(email: string, password: string): Promise<User> {
+    const user = await this.usersService.findUserByEmail(email)
+
+    if (!user) throw new NotFoundException(`User with ${email} doesn't exist`)
+
+    const isEqual = await compare(password, user.password)
+    if (!isEqual) throw new UserInputError('Password do not match')
+
+    return user
   }
 
-  findAll() {
-    return this.auths;
-  }
+  async generateJWT(loginInput: any): Promise<LoginResponse> {
+    const {} = loginInput
+    const payload = {
+      sub: '',
+      email: '',
+    }
 
-  findOne(id: number) {
-    return this.auths.find((auth) => auth.id === id);
-  }
+    const date = new Date()
+    const currentTime = date.getTime()
+    const expirationTime = currentTime + 1000 * 60 * 60 * 24 * 5 // 5 days
 
-  update(id: number, updateAuthInput: UpdateAuthInput) {
-    const authIndex = this.auths.findIndex((auth) => auth.id === id);
-    if (!authIndex) return null;
+    const token = this.jwtService.sign(payload, {
+      expiresIn: expirationTime,
+    })
 
-    this.auths[authIndex] = {
-      ...this.auths[authIndex],
-      ...updateAuthInput,
-    };
-
-    return this.auths[authIndex];
-  }
-
-  remove(id: number) {
-    const authIndex = this.auths.findIndex((auth) => auth.id === id);
-    if (!authIndex) return null;
-
-    this.auths = this.auths.filter((auth) => auth.id !== id);
-    return this.auths;
+    return { token, expirationTime: expirationTime + '' }
   }
 }

@@ -7,34 +7,42 @@
 
 /* tslint:disable */
 /* eslint-disable */
-export class CreateAuthInput {
-    id: string;
-    name: string;
-    exampleField: number;
+export interface LoginInput {
+    email: string;
+    password: string;
 }
 
-export class UpdateAuthInput {
-    name?: Nullable<string>;
+export interface CreateUserInput {
+    email: string;
+    password: string;
 }
 
-export class Auth {
-    id?: Nullable<string>;
-    name?: Nullable<string>;
-    exampleField?: Nullable<number>;
+export interface UpdateUserInput {
+    email?: Nullable<string>;
+    password?: Nullable<string>;
 }
 
-export abstract class IQuery {
-    abstract authentications(): Nullable<Auth>[] | Promise<Nullable<Auth>[]>;
-
-    abstract authentication(id: number): Nullable<Auth> | Promise<Nullable<Auth>>;
+export interface LoginResponse {
+    token: string;
+    expirationTime: string;
 }
 
-export abstract class IMutation {
-    abstract createAuth(createAuthInput: CreateAuthInput): Auth | Promise<Auth>;
+export interface IMutation {
+    login(loginInput?: Nullable<LoginInput>): Nullable<LoginResponse> | Promise<Nullable<LoginResponse>>;
+    createUser(createUserInput: CreateUserInput): User | Promise<User>;
+    removeUser(id: number): Nullable<User> | Promise<Nullable<User>>;
+}
 
-    abstract updateAuth(id: number, updateAuthInput: UpdateAuthInput): Auth | Promise<Auth>;
+export interface User {
+    id: number;
+    email: string;
+    password: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
 
-    abstract removeAuth(id: number): Nullable<Auth> | Promise<Nullable<Auth>>;
+export interface IQuery {
+    user(id: number): User | Promise<User>;
 }
 
 type Nullable<T> = T | null;

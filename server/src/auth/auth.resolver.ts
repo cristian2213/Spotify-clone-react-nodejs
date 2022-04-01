@@ -1,36 +1,18 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { AuthService } from './auth.service';
-import { CreateAuthInput, UpdateAuthInput } from '../graphql.schema';
+import { UseGuards } from '@nestjs/common'
+import { Resolver, Mutation, Args } from '@nestjs/graphql'
+import { AuthService } from './auth.service'
+import { LoginInput } from '../graphql.schema'
+import { LocalAuthGuard } from './guards/local.guard'
+// This Guard invokes the Passport strategy and kicks off the steps described above (retrieving credentials, running the verify function, creating the user property, etc).
 
 @Resolver('Auth')
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation('createAuth')
-  create(@Args('createAuthInput') createAuthInput: CreateAuthInput) {
-    return this.authService.create(createAuthInput);
-  }
-
-  @Query('authentications')
-  findAll() {
-    return this.authService.findAll();
-  }
-
-  @Query('authentication')
-  findOne(@Args('id') id: number) {
-    return this.authService.findOne(id);
-  }
-
-  @Mutation('updateAuth')
-  update(
-    @Args('id') id: number,
-    @Args('updateAuthInput') updateAuthInput: UpdateAuthInput,
-  ) {
-    return this.authService.update(id, updateAuthInput);
-  }
-
-  @Mutation('removeAuth')
-  remove(@Args('id') id: number) {
-    return this.authService.remove(id);
+  @UseGuards(LocalAuthGuard)
+  @Mutation('login')
+  create(@Args('loginInput') loginInput: LoginInput) {
+    console.log(loginInput)
+    return this.authService.generateJWT(loginInput)
   }
 }

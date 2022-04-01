@@ -1,0 +1,28 @@
+type Auth {
+  # Example field (placeholder)
+  id: ID
+  name: String
+  exampleField: Int
+}
+
+input CreateAuthInput {
+  # Example field (placeholder)
+  id: ID!
+  name: String!
+  exampleField: Int!
+}
+
+input UpdateAuthInput {
+  name: String
+}
+
+type Query {
+  authentications: [Auth]!
+  authentication(id: Int!): Auth
+}
+
+type Mutation {
+  createAuth(createAuthInput: CreateAuthInput!): Auth!
+  updateAuth(id: Int!, updateAuthInput: UpdateAuthInput!): Auth!
+  removeAuth(id: Int!): Auth
+}
