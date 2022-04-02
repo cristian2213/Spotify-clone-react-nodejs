@@ -8,15 +8,15 @@ import { User } from '../../graphql.schema'
 export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
   constructor(private authService: AuthService) {
     super({
-      // custom naming
+      // rewrite, by default ['username', 'password']
       usernameField: 'email',
       passwordField: 'password',
     })
   }
 
-  async validate(email: string, password: string): Promise<User> | never {
+  async validate(email: string, password: string): Promise<User | never> {
     const user = await this.authService.validateUser(email, password)
-    if (!user) throw new UnauthorizedException('Unauthorized user')
-    return user
+    if (!user) throw new UnauthorizedException()
+    return user // This user is putted in grapgql's context
   }
 }

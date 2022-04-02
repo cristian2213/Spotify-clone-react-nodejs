@@ -1,10 +1,18 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { UsersService } from '../users/users.service'
 import { compare } from 'bcrypt'
-import { UserInputError } from 'apollo-server-express'
-import { User, LoginResponse } from '../graphql.schema'
 import { JwtService } from '@nestjs/jwt'
+import {
+  LoginResponse,
+  LoginInput,
+  SignupInput,
+  SignupResponse,
+} from '../graphql.schema'
 
+interface TokenPayload {
+  sub: number
+  email: string
+}
 @Injectable()
 export class AuthService {
   constructor(
@@ -12,32 +20,37 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<User> {
+  async signUp(signupInput: SignupInput): Promise<SignupResponse | never> {
+    const { email } = signupInput
     const user = await this.usersService.findUserByEmail(email)
-
-    if (!user) throw new NotFoundException(`User with ${email} doesn't exist`)
-
-    const isEqual = await compare(password, user.password)
-    if (!isEqual) throw new UserInputError('Password do not match')
-
-    return user
+    if (user) throw new NotFoundException(`User with ${email} already exists`)
+    const newUser = await this.usersService.create(signupInput)
+    return newUser
   }
 
-  async generateJWT(loginInput: any): Promise<LoginResponse> {
-    const {} = loginInput
-    const payload = {
-      sub: '',
-      email: '',
+  async login(loginInput: LoginInput): Promise<LoginResponse> {
+    const { id, email } = loginInput
+    const payload: TokenPayload = {
+      sub: id,
+      email,
     }
+    const expirationTime = (1000 * 60 * 60 * 24 * 5).toString() // 5 days
+    const token = this.generateJWT(payload, expirationTime)
+    return { token, expirationTime }
+  }
 
-    const date = new Date()
-    const currentTime = date.getTime()
-    const expirationTime = currentTime + 1000 * 60 * 60 * 24 * 5 // 5 days
-
+  generateJWT(payload: TokenPayload, expirationTime: string) {
     const token = this.jwtService.sign(payload, {
       expiresIn: expirationTime,
     })
+    return token
+  }
 
-    return { token, expirationTime: expirationTime + '' }
+  async validateUser(email: string, pass: string): Promise<any> {
+    const user = await this.usersService.findUserByEmail(email)
+    if (!user) return null
+    const isEqual = await compare(pass, user.password)
+    if (!isEqual) return null
+    return user
   }
 }

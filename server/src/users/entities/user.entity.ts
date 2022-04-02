@@ -14,6 +14,14 @@ class User implements IUser {
 
   @Column({
     type: 'varchar',
+    name: 'name',
+    length: 150,
+    nullable: false,
+  })
+  name: string
+
+  @Column({
+    type: 'varchar',
     name: 'email',
     length: 150,
     nullable: false,

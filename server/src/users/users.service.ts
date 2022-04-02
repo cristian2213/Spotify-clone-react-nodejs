@@ -10,15 +10,7 @@ export class UsersService {
   constructor(@InjectRepository(User) private userReposity: Repository<User>) {}
 
   async create(createUserInput: CreateUserInput): Promise<User | never> {
-    const { email, password } = createUserInput
-    const user = await this.userReposity.findOne({
-      where: {
-        email,
-      },
-    })
-
-    if (user) throw new NotFoundException(`Email already exists`)
-
+    const { password } = createUserInput
     const userIntance = this.userReposity.create(createUserInput)
     userIntance.password = await bycrypt.hash(password, 10)
     return await this.userReposity.save(userIntance)

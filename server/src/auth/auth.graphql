@@ -1,4 +1,10 @@
 input LoginInput {
+  id: Int
+  email: String!
+  password: String!
+}
+input SignupInput {
+  name: String!
   email: String!
   password: String!
 }
@@ -8,6 +14,14 @@ type LoginResponse {
   expirationTime: String!
 }
 
+type SignupResponse {
+  id: Int!
+  email: String!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
 type Mutation {
   login(loginInput: LoginInput): LoginResponse
+  signup(signupInput: SignupInput): SignupResponse
 }
