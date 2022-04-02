@@ -62,7 +62,7 @@ I want to create an exacly clone of Spotify with React and Node.js and with a li
 ### Built With
 
 <a id="built-with"></a>
-These are the technologies with which this project is being built, I had thought to develop it with Nest.js, but I will leave it for another project.
+These are the technologies with which this project is being built:
 
 - [TypeScript](https://www.typescriptlang.org/)
 - [Node.js](https://nodejs.org/)
