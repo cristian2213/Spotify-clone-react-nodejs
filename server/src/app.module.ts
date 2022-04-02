@@ -13,7 +13,7 @@ import { AppService } from './app.service'
 import { DatabaseModule } from './database/database.module'
 // import { AuthModule2 } from './auth-mock/auth.module'
 import { UsersModule } from './users/users.module'
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/auth.module'
 
 @Module({
   imports: [

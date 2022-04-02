@@ -8,11 +8,8 @@ import {
   SignupInput,
   SignupResponse,
 } from '../graphql.schema'
+import { TokenPayload } from './dto/token.dto'
 
-interface TokenPayload {
-  sub: number
-  email: string
-}
 @Injectable()
 export class AuthService {
   constructor(
