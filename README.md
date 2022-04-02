@@ -64,9 +64,15 @@ I want to create an exacly clone of Spotify with React and Node.js and with a li
 <a id="built-with"></a>
 These are the technologies with which this project is being built, I had thought to develop it with Nest.js, but I will leave it for another project.
 
+- [TypeScript](https://www.typescriptlang.org/)
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
-- [React.js](https://reactjs.org/)
+- [Nestjs](https://nestjs.com/)
+- [ApolloServer](https://www.apollographql.com/docs/apollo-server/#:~:text=Apollo%20Server%20is%20an%20open,use%20data%20from%20any%20source.)
+- [PostgreSQL](https://www.postgresql.org/)
+- [TypeORM](https://typeorm.io/)
+- [React](https://reactjs.org/)
+- [ApolloClient](https://www.apollographql.com/docs/react/)
 - [Jest](https://jestjs.io/)
 - [SuperTest](https://github.com/visionmedia/supertest#readme)
 - [Swagger](https://swagger.io/)

@@ -1,10 +1,4 @@
-import {
-  Resolver,
-  Mutation,
-  Args,
-  Context,
-  GqlContextType,
-} from '@nestjs/graphql'
+import { Resolver, Mutation, Args, Context } from '@nestjs/graphql'
 import { AuthService } from './auth.service'
 import { LoginInput, SignupInput } from '../graphql.schema'
 import { GraphqlAuthGuard } from './guards/gql-auth.guard'
