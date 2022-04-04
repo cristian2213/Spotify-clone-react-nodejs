@@ -1,13 +1,14 @@
-import { LocalStrategy } from './strategies/local.strategy'
-import { Module } from '@nestjs/common'
-import { AuthService } from './auth.service'
-import { AuthResolver } from './auth.resolver'
-import { UsersModule } from './../users/users.module'
-import { PassportModule } from '@nestjs/passport'
-import { JwtModule } from '@nestjs/jwt'
-import { JWTStrategy } from './strategies/jwt.strategy'
-import config from '../config/env/config'
-import { ConfigType } from '@nestjs/config'
+import { LocalStrategy } from './strategies/local.strategy';
+import { ConfigType } from '@nestjs/config';
+import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+
+import { UsersModule } from './../users/users.module';
+import { JWTStrategy } from './strategies/jwt.strategy';
+import config from '../config/env/config';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
 
 @Module({
   imports: [
@@ -18,10 +19,11 @@ import { ConfigType } from '@nestjs/config'
       useFactory: (configService: ConfigType<typeof config>) => {
         return {
           secret: configService.auth.jwt.JWT_SECRET,
-        }
+        };
       },
     }),
   ],
-  providers: [AuthResolver, AuthService, LocalStrategy, JWTStrategy],
+  providers: [AuthService, LocalStrategy, JWTStrategy],
+  controllers: [AuthController],
 })
 export class AuthModule {}
