@@ -3,6 +3,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres
+    container_name: postgres-spotify-app
     environment:
       - POSTGRES_DB=spotify-db
       - POSTGRES_USER=root
@@ -15,6 +16,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    container_name: pgadmin-spotify-app
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=admin123

@@ -1,4 +1,4 @@
-import { registerAs } from '@nestjs/config'
+import { registerAs } from '@nestjs/config';
 export default registerAs('config', () => {
   return {
     databases: {
@@ -15,5 +15,5 @@ export default registerAs('config', () => {
         JWT_SECRET: process.env.JWT_SECREt,
       },
     },
-  }
-})
+  };
+});

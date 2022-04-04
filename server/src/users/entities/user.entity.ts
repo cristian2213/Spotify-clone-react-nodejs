@@ -4,13 +4,12 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-} from 'typeorm'
-import { User as IUser } from '../../graphql.schema'
+} from 'typeorm';
 
 @Entity({ name: 'users' })
-class User implements IUser {
+export class User {
   @PrimaryGeneratedColumn({ type: 'smallint', unsigned: true })
-  id: number
+  id: number;
 
   @Column({
     type: 'varchar',
@@ -18,7 +17,7 @@ class User implements IUser {
     length: 150,
     nullable: false,
   })
-  name: string
+  name: string;
 
   @Column({
     type: 'varchar',
@@ -26,7 +25,7 @@ class User implements IUser {
     length: 150,
     nullable: false,
   })
-  email: string
+  email: string;
 
   @Column({
     type: 'varchar',
@@ -34,21 +33,19 @@ class User implements IUser {
     name: 'password',
     nullable: false,
   })
-  password: string
+  password: string;
 
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  createdAt: Date
+  createdAt: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  updatedAt: Date
+  updatedAt: Date;
 }
-
-export default User
