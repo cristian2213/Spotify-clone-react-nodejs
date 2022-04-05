@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { SearchDto } from './../search/dto/query.dto';
 import { Song, Author } from '../search/dto/song.dto';
 
 @Injectable()
@@ -45,14 +46,13 @@ export class GlobalMap {
     return mappedSong.filter((song) => song != null);
   }
 
-  public mapSearch(search: string): string {
-    const mapped = search
+  public mapSearch(search: string | SearchDto): string {
+    const mapped = (search as unknown as string)
       .toLowerCase()
       .trim()
       .split(/[-,._:; ]/g)
       .join(' ')
       .trim();
-    console.log(mapped);
     return mapped;
   }
 }
