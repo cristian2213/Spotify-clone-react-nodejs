@@ -10,7 +10,7 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { AudioModule } from './audio/audio.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { AudioModule } from './audio/audio.module';
     DatabaseModule,
     UsersModule,
     AuthModule,
-    AudioModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],
