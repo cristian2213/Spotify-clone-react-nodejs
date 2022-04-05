@@ -1,12 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import * as compression from 'compression';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   /* ********* MAIN APP *********** */
   const app = await NestFactory.create(AppModule);
   /* **************  ************** */
+  app.use(compression());
   app.useGlobalPipes(new ValidationPipe());
 
   /* ********* SWAGGER DOCs **********/

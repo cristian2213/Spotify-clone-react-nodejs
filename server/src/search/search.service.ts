@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
 // import * as ytdl from 'ytdl-core';
 import * as ytsr from 'ytsr';
-import { Item } from 'ytsr';
 import { Song } from './dto/song.dto';
 import { GlobalMap } from '../utils/map.util';
 import { GlobalRandom } from '../utils/random.util';
-
+import {
+  LimitDto,
+  PageDto,
+  RandomDto,
+  RanTotalDto,
+  SearchDto,
+} from './dto/query.dto';
 
 @Injectable()
 export class SearchService {
@@ -18,27 +23,33 @@ export class SearchService {
     private readonly globalRandom: GlobalRandom,
   ) {}
 
-  // #5 - Create swagger documentation ❌
   async fetchSongs(
-    search: string,
-    limit: number,
-    page: number,
-    random: boolean,
-    total: number,
-  ): Promise<Song[] | Song | Item[]> {
-    const defLimit = limit || this.defaultLimit;
+    search: SearchDto,
+    limit: LimitDto,
+    page: PageDto,
+    random: RandomDto,
+    total: RanTotalDto,
+  ): Promise<Song[]> {
+    const defLimit = (limit as unknown as number) || this.defaultLimit;
+    console.log(defLimit);
     let songs: Song[];
 
-    if (random) {
-      while (true) {
+    if (+random == 1) {
+      let i = 1;
+      const limit = 12;
+      while (i <= limit) {
         try {
           const songsIDs = this.globalRandom.getRandomSongs(total || 12);
           const randomSongs = await this.getMapRandomSongs(songsIDs);
+
+          if (randomSongs.length == 0) {
+            i++;
+            continue;
+          }
+
           songs = randomSongs;
           break;
-        } catch {
-          continue;
-        }
+        } catch {}
       }
     } else {
       const mappedSearch = this.globalMap.mapSearch(search);

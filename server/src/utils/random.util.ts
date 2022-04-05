@@ -1,3 +1,4 @@
+import { RanTotalDto } from '../search/dto/query.dto';
 import * as ytdl from 'ytdl-core';
 
 export class GlobalRandom {
@@ -375,7 +376,7 @@ export class GlobalRandom {
     'SHhe21hCn_o',
   ];
 
-  public getRandomSongs(totalSongs: number): Array<string> {
+  public getRandomSongs(totalSongs: number | RanTotalDto ): Array<string> {
     let limit = totalSongs;
     let i = 1;
     const songs = [];
