@@ -1,11 +1,31 @@
+import { useEffect, useContext } from 'react';
+import { lazy } from 'react';
+import SkeletonHome from '../../components/layout/skeletonHome/SkeletonHome';
+import { SongContext } from '../../context/songs/SongProvider';
+
+import useSWR from 'swr';
 import AlbumsSections from '../../components/album/AlbumsSections';
-import { sections } from '../../dummyData';
 
 function HomePage() {
+  const {
+    httpGetSongs,
+    sections: gotSections,
+    isLoanding,
+  } = useContext(SongContext);
+  useEffect(() => {
+    httpGetSongs();
+  }, [httpGetSongs]);
+
   return (
-    <section>
-      <AlbumsSections sections={sections} />
-    </section>
+    <>
+      {isLoanding ? (
+        <SkeletonHome />
+      ) : (
+        <section>
+          <AlbumsSections sections={gotSections} />
+        </section>
+      )}
+    </>
   );
 }
 

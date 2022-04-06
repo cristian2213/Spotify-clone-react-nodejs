@@ -8,6 +8,12 @@ async function bootstrap() {
   /* ********* MAIN APP *********** */
   const app = await NestFactory.create(AppModule);
   /* **************  ************** */
+  /* ********* ENABLE CORS *********** */
+  app.enableCors({
+    origin: 'http://localhost:3000',
+  });
+  /* **************  ************** */
+
   app.use(compression());
   app.useGlobalPipes(new ValidationPipe());
 
@@ -40,10 +46,6 @@ async function bootstrap() {
 
   /* ********* MAIN APP *********** */
   await app.listen(process.env.APP_PORT || 3000);
-  /* **************  ************** */
-
-  /* ********* ENABLE CORS *********** */
-  app.enableCors();
   /* **************  ************** */
 }
 bootstrap();

@@ -5,6 +5,7 @@ interface IProps {
 }
 
 function AlbumsSections({ sections }: IProps) {
+  console.log(sections);
   return (
     <>
       {sections.map((section) => (

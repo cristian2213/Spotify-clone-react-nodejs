@@ -21,7 +21,7 @@ function Player() {
     {
       title: 'Sticky Fingers',
       artist: 'Lekkerboy',
-      audioSrc: './assets/song1.mp3',
+      audioSrc: './assets/song122.mp3',
       image: './assets/metal.jpg',
       color: '#000',
     },
@@ -29,7 +29,7 @@ function Player() {
     {
       title: 'Saves The Day #2',
       artist: 'Lekkerboy',
-      audioSrc: './assets/song2.mp3',
+      audioSrc: './assets/song122.mp3',
       image: './assets/metal2.jpg',
       color: '#000',
     },

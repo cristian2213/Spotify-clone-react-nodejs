@@ -10,8 +10,10 @@ function AppLayout() {
         <LeftNavigation />
 
         <main className='w-full bg-gradient-to-t from-[#121212] to-[#111111] px-8 overflow-y-scroll overflow-x-hidden custom-bar'>
-          <TopNavigationBar />
-          <Outlet />
+          <div className='custom-resize'>
+            <TopNavigationBar />
+            <Outlet />
+          </div>
         </main>
       </div>
 
