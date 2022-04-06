@@ -31,26 +31,15 @@ export class SearchService {
     total: RanTotalDto,
   ): Promise<Song[]> {
     const defLimit = (limit as unknown as number) || this.defaultLimit;
-    console.log(defLimit);
+
     let songs: Song[];
 
     if (+random == 1) {
       let i = 1;
       const limit = 12;
-      while (i <= limit) {
-        try {
-          const songsIDs = this.globalRandom.getRandomSongs(total || 12);
-          const randomSongs = await this.getMapRandomSongs(songsIDs);
-
-          if (randomSongs.length == 0) {
-            i++;
-            continue;
-          }
-
-          songs = randomSongs;
-          break;
-        } catch {}
-      }
+      const songsIDs = this.globalRandom.getRandomSongs(total || 12);
+      const randomSongs = await this.getMapRandomSongs(songsIDs);
+      songs = randomSongs;
     } else {
       const mappedSearch = this.globalMap.mapSearch(search);
       const { items } = await ytsr(mappedSearch, {
@@ -66,15 +55,24 @@ export class SearchService {
   async getMapRandomSongs(randomSongs: Array<string>): Promise<Song[] | any> {
     const totalSongs = randomSongs.length;
     const songs = [];
-    for (let i = 0; i < totalSongs; i++) {
-      const { items } = await ytsr(randomSongs[i], {
+    let i = 0;
+    let attempts = 0;
+    while (i < totalSongs) {
+      const songID = randomSongs[i];
+      const { items } = await ytsr(songID, {
         limit: 1,
       });
 
-      if (items.length < 1) continue;
+      if (items == undefined || items.length < 1) {
+        if (attempts === totalSongs * 3) break;
+        attempts++;
+        continue;
+      }
 
       songs.push(items[0]);
+      i++;
     }
+
     const mappedSongs = this.globalMap.mapSongs(songs);
     return mappedSongs;
   }

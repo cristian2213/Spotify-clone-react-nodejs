@@ -27,7 +27,7 @@ function AlbumBox({ singer }: IProps) {
         <img
           src={singer.img}
           alt={singer.alt}
-          className='block mb-5 rounded-md'
+          className='block mb-5 rounded-md w-[150px] h-[150px] object-cover'
         />
         <PlayBtn classes={showPlayBtn} />
       </div>

@@ -13,7 +13,7 @@ export class GlobalMap {
 
       // ['hh': 'mm': 'ss']
       if (mappedDuration.length > 2) return;
-      if (+mappedDuration[0] > 6) return;
+      if (+mappedDuration[0] > 9) return;
 
       let author: Author = {
         name: '',
@@ -49,7 +49,6 @@ export class GlobalMap {
   public mapSearch(search: string | SearchDto): string {
     const mapped = (search as unknown as string)
       .toLowerCase()
-      .trim()
       .split(/[-,._:; ]/g)
       .join(' ')
       .trim();

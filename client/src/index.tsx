@@ -1,14 +1,18 @@
 import './index.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { SongProvider } from './context/songs/SongProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <SongProvider>
+        <App />
+      </SongProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
