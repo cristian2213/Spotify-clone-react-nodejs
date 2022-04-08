@@ -1,9 +1,7 @@
 import { useEffect, useContext } from 'react';
-import { lazy } from 'react';
 import SkeletonHome from '../../components/layout/skeletonHome/SkeletonHome';
 import { SongContext } from '../../context/songs/SongProvider';
 
-import useSWR from 'swr';
 import AlbumsSections from '../../components/album/AlbumsSections';
 
 function HomePage() {

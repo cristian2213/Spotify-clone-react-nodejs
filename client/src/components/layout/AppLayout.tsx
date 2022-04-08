@@ -9,11 +9,9 @@ function AppLayout() {
       <div className='w-full h-[calc(100vh-90px)] bg-gray-400 flex flex-row'>
         <LeftNavigation />
 
-        <main className='w-full bg-gradient-to-t from-[#121212] to-[#111111] px-8 overflow-y-scroll overflow-x-hidden custom-bar'>
-          <div className='custom-resize'>
-            <TopNavigationBar />
-            <Outlet />
-          </div>
+        <main className='w-full bg-gradient-to-t from-[#121212] to-[#111111] overflow-y-scroll overflow-x-hidden custom-bar custom-resize px-8'>
+          <TopNavigationBar />
+          <Outlet />
         </main>
       </div>
 

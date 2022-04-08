@@ -114,6 +114,12 @@
   html {
     font-family: 'Gotham', sans-serif;
     font-weight: 400;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none;                             
   }
 
   body {
@@ -129,9 +135,7 @@
       right-2;
   }
 
-  .custom-resize {
-    cursor: col-resize;
-  }
+
 }
 
 @layer utilities {
