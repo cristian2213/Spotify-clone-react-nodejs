@@ -3,7 +3,8 @@ import { HTTP_GET_SONGS } from './songTypes';
 import SongReducer from './SongReducer';
 import { httpClient } from '../../config/clientAxios';
 import { Endpoints } from './songEndPoints';
-import axios from 'axios';
+
+const APP_HTTP_SERVER = process.env.REACT_APP_HTTP_SERVER;
 
 interface ISongState {
   sections: Array<any>;
@@ -30,17 +31,15 @@ export function SongProvider({ children }: any) {
 
   const httpGetSongs = useCallback(async () => {
     try {
-      // const URL = 'http://localhost:8080/v1' + Endpoints.GetSongs;
-      const URL = 'http://localhost:8080/v1/search';
-      const resHttp = await axios.get(URL, {
+      const URL = `${APP_HTTP_SERVER}${Endpoints.GetSongs}`;
+      const httpRes = await httpClient.get(URL, {
         params: {
           random: 1,
         },
-        timeout: 60000,
       });
       dispatch({
         type: HTTP_GET_SONGS,
-        data: resHttp.data,
+        data: httpRes.data,
       });
     } catch (error) {
       // DOTO SOMETHING
@@ -48,10 +47,23 @@ export function SongProvider({ children }: any) {
     }
   }, []);
 
+  const httpGetOneSong = useCallback(async (params) => {
+    try {
+      const URL = `${APP_HTTP_SERVER}${Endpoints.GetSongs}`;
+      const httpRes = await httpClient.get(URL, {
+        params,
+      });
+      return httpRes.data[0];
+    } catch (error: any) {
+      return true;
+    }
+  }, []);
+
   const contextProvider = {
     sections: songState.sections,
     isLoanding: songState.isLoanding,
     httpGetSongs,
+    httpGetOneSong,
   };
 
   return (
