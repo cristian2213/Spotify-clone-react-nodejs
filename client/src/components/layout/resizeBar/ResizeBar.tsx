@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, MouseEvent } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 
 interface IProps {
   onSizeChange: (arg: number) => void;
@@ -57,11 +57,9 @@ function ResizeBar({ onSizeChange }: IProps) {
 
   return (
     <div
-      className='w-[9px] bg-black cursor-col-resize group transition-all'
+      className='w-[9px] bg-black cursor-col-resize group transition-all border-black border-r-[0.1px] hover:border-[#636363]'
       onMouseDown={handleResize}
-    >
-      <span className='block w-[0.1px] h-full group-hover:bg-[#636363]'></span>
-    </div>
+    ></div>
   );
 }
 

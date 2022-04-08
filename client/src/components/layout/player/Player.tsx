@@ -75,7 +75,7 @@ function Player() {
   };
 
   return (
-    <div className='h-[90px] bg-gray-800 flex flex-row justify-between items-center px-4'>
+    <div className='h-[90px] bg-[#181818] flex flex-row justify-between items-center px-4'>
       <PlayerAlbum title={title} artist={artist} image={image} color={color} />
       <AudioControls
         isPlaying={isPlaying}

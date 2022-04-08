@@ -1,5 +1,9 @@
 import { GoPlay } from 'react-icons/go';
-import { BsFillSkipStartFill, BsFillSkipEndFill } from 'react-icons/bs';
+import {
+  BsFillSkipStartFill,
+  BsFillSkipEndFill,
+  BsFillPauseCircleFill,
+} from 'react-icons/bs';
 import { FaRandom } from 'react-icons/fa';
 import { TiArrowRepeat } from 'react-icons/ti';
 
@@ -30,14 +34,11 @@ function AudioControls({
           onClick={onPrevClick}
         />
         {isPlaying ? (
-          <button
-            type='button'
+          <BsFillPauseCircleFill
             className='pause text-white'
             onClick={() => onPlayPauseClick(false)}
-            aria-label='Pause'
-          >
-            Pause
-          </button>
+            size={38}
+          />
         ) : (
           <GoPlay
             className='text-white'
