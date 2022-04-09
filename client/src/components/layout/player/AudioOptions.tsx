@@ -1,16 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Volumes from './Volumes';
 import VolumeBar from './VolumeBar';
 
-function AudioOptions() {
+interface IPros {
+  onVolume: (arg: number) => void;
+}
+
+function AudioOptions({ onVolume }: IPros) {
   const [isMute, setIsMute] = useState(false);
   const [oldProgressBar, setOldProgressBar] = useState(0);
   const [progressBar, setProgressBar] = useState(100);
   const low = 33;
   const medium = 66;
 
-  const handleChange = (newProgress: any) => {
+  const handleChange = (newProgress: number) => {
     setProgressBar(newProgress);
+    onVolume(newProgress);
   };
 
   const handleMute = () => {
@@ -19,8 +24,10 @@ function AudioOptions() {
       if (mute) {
         setOldProgressBar(progressBar);
         setProgressBar(0);
+        onVolume(0);
       } else {
         setProgressBar(oldProgressBar);
+        onVolume(oldProgressBar);
         setOldProgressBar(0);
       }
       return mute;

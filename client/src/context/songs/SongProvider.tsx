@@ -43,7 +43,7 @@ export function SongProvider({ children }: any) {
       });
     } catch (error) {
       // DOTO SOMETHING
-      console.log(error);
+      // console.log(error);
     }
   }, []);
 

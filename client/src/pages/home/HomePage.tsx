@@ -5,17 +5,17 @@ import { SongContext } from '../../context/songs/SongProvider';
 import AlbumsSections from '../../components/album/AlbumsSections';
 
 function HomePage() {
-  // const {
-  //   httpGetSongs,
-  //   sections: gotSections,
-  //   isLoanding,
-  // } = useContext(SongContext);
-  // useEffect(() => {
-  //   httpGetSongs();
-  // }, [httpGetSongs]);
+  const {
+    httpGetSongs,
+    sections: gotSections,
+    isLoanding,
+  } = useContext(SongContext);
+  useEffect(() => {
+    httpGetSongs();
+  }, [httpGetSongs]);
 
-  const isLoanding = false;
-  const gotSections: Array<any> = [];
+  // const isLoanding = false;
+  // const gotSections: Array<any> = [];
   return (
     <>
       {isLoanding ? (

@@ -1,67 +1,74 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PlayerAlbum from './PlayerAlbum';
 import AudioControls from './AudioControls ';
 import AudioOptions from './AudioOptions';
 
-// ./assets/song1.mp3
-//   audioElement.setAttribute('autoplay', '');
-// audioElement.setAttribute('controls', '');
-// audioRef.current.audioElement.play();
-// console.log(audioElement.currentTime);
-// console.log(audioElement.ended);
-// console.log(audioElement.duration);
+const tracks = [
+  {
+    title: 'Sticky Fingers',
+    artist: 'Lekkerboy',
+    audioSrc: './assets/piano1.mp3',
+    image: './assets/metal.jpg',
+    color: '#000',
+  },
+  {
+    title: 'Sticky Fingers',
+    artist: 'Lekkerboy',
+    audioSrc: './assets/song1.mp3',
+    image: './assets/metal.jpg',
+    color: '#000',
+  },
+
+  {
+    title: 'Saves The Day #2',
+    artist: 'Lekkerboy',
+    audioSrc: './assets/song2.mp3',
+    image: './assets/metal2.jpg',
+    color: '#000',
+  },
+];
+
+/* 
+Bugs:
+- Stop song and play another
+- Volume
+*/
+
 function Player() {
-  // State
   const [trackIndex, setTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
   const [isLoaded, setIsloaded] = useState(false);
 
-  const tracks = [
-    {
-      title: 'Sticky Fingers',
-      artist: 'Lekkerboy',
-      audioSrc: './assets/song1.mp3',
-      image: './assets/metal.jpg',
-      color: '#000',
-    },
-
-    {
-      title: 'Saves The Day #2',
-      artist: 'Lekkerboy',
-      audioSrc: './assets/song122.mp3',
-      image: './assets/metal2.jpg',
-      color: '#000',
-    },
-  ];
   const { title, artist, color, image, audioSrc } = tracks[trackIndex];
   const [audio, setAudioSrc] = useState(new Audio(audioSrc));
-  // audio.setAttribute('autoplay', '');
 
-  const handleAudioEvents = (event: any) => {
-    const { type } = event;
-    switch (true) {
-      case type === 'canplay':
-        console.log(event.path[0].duration);
-        setAudioDuration(event.path[0].duration);
-        break;
+  const handleAudioEvents = useCallback(
+    (event: any) => {
+      const { type } = event;
+      switch (true) {
+        case type === 'canplay':
+          setAudioDuration(event.path[0].duration);
+          break;
 
-      case type === 'timeupdate':
-        const currentTime = event.path[0].currentTime;
-        setCurrentTime(currentTime);
-        break;
+        case type === 'timeupdate':
+          const currentTime = event.path[0].currentTime;
+          setCurrentTime(currentTime);
+          break;
 
-      case type === 'ended':
-        setIsloaded(false);
-        break;
+        case type === 'ended':
+          setIsloaded(false);
+          audio.pause();
+          break;
 
-      default:
-        break;
-    }
-  };
+        default:
+          break;
+      }
+    },
+    [audio]
+  );
 
-  // PLAY AND PAUSE
   useEffect(() => {
     if (!isLoaded) {
       audio.addEventListener('canplay', handleAudioEvents);
@@ -70,30 +77,29 @@ function Player() {
       setIsloaded(true);
     }
 
-    if (audio.readyState >= 2) {
-      if (isPlaying) {
-        audio.play();
-      } else audio.pause();
-    }
+    if (isPlaying) {
+      audio.play();
+    } else audio.pause();
+  }, [isPlaying, audio, isLoaded, handleAudioEvents]);
 
-    return () => {
-      // audio.removeEventListener('canplay', handleAudioEvents);
-      // audio.removeEventListener('timeupdate', handleAudioEvents);
-      // audio.removeEventListener('ended', handleAudioEvents);
-    };
-  }, [isPlaying, audio, isLoaded]);
+  const ResetState = () => {
+    audio.pause();
+    setAudioDuration(0);
+    setCurrentTime(0);
+    setIsPlaying(true);
+    setIsloaded(false);
+  };
 
-  // Handlers
   const toPrevTrack = () => {
     let index;
     if (trackIndex - 1 < 0) {
       index = tracks.length - 1;
-      setTrackIndex(index); // LAST TRACK
+      setTrackIndex(index); //  last track
     } else {
       index = trackIndex - 1;
       setTrackIndex(index);
     }
-    audio.pause();
+    ResetState();
     setAudioSrc(new Audio(tracks[index].audioSrc));
   };
 
@@ -104,10 +110,18 @@ function Player() {
       setTrackIndex(index);
     } else {
       index = 0;
-      setTrackIndex(index); // FIRST TRACK
+      setTrackIndex(index); // first track
     }
-    audio.pause();
+    ResetState();
     setAudioSrc(new Audio(tracks[index].audioSrc));
+  };
+
+  const handleVolume = (volume: number) => {
+    audio.volume = volume / 100;
+  };
+
+  const handlePointer = (newPointer: number) => {
+    audio.currentTime = newPointer;
   };
 
   return (
@@ -120,8 +134,9 @@ function Player() {
         onPlayPauseClick={setIsPlaying}
         audioDuration={audioDuration}
         audioCurrentTime={currentTime}
+        handlePointer={handlePointer}
       />
-      <AudioOptions />
+      <AudioOptions onVolume={handleVolume} />
     </div>
   );
 }

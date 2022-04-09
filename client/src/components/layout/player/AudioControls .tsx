@@ -13,6 +13,7 @@ interface IProps {
   readonly onPlayPauseClick: (arg: boolean) => void;
   readonly onPrevClick: () => void;
   readonly onNextClick: () => void;
+  readonly handlePointer: (arg: number) => void;
   readonly audioDuration: number;
   readonly audioCurrentTime: number;
 }
@@ -24,6 +25,7 @@ function AudioControls({
   onNextClick,
   audioDuration,
   audioCurrentTime,
+  handlePointer,
 }: IProps) {
   return (
     <div className='flex flex-col justify-center items-center w-full'>
@@ -66,6 +68,7 @@ function AudioControls({
       <ProgressBar
         audioDuration={audioDuration}
         audioCurrentTime={audioCurrentTime}
+        onPointer={handlePointer}
       />
     </div>
   );

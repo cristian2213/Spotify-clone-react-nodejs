@@ -81,9 +81,18 @@ These are the technologies with which this project is being built:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- PROGRESS -->
+## Skeleton
 
-<!-- ## PENDING TO PROGRESS -->
+![Skeleton](./imgs/skeleton.png?raw=true 'Skeleton')
+<br/>
+<br/>
+
+## Songs
+
+![Songs](./imgs/songs.png?raw=true 'Songs')
+
+<br/>
+<br/>
 
 <!-- GETTING STARTED -->
 
