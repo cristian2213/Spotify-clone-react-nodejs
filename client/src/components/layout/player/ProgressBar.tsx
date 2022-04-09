@@ -1,19 +1,24 @@
+// import { ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
+
 interface IPros {
   readonly audioDuration: any;
   readonly audioCurrentTime: any;
+  readonly onPointer: (arg: number) => void;
 }
 
-function ProgressBar({ audioDuration, audioCurrentTime }: IPros) {
-  const maxTime = +audioDuration.toFixed(3);
-  const currentTimeInRaw = +audioCurrentTime.toFixed(3);
-  const currentTime = (currentTimeInRaw * 100) / maxTime;
+function ProgressBar({ audioDuration, audioCurrentTime, onPointer }: IPros) {
+  const maxTime = audioDuration;
+  const currentTimeInRaw = audioCurrentTime.toFixed(2);
+  const currentTime = ((currentTimeInRaw * 100) / maxTime).toFixed(2);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newPointer = +event.target.value;
+    onPointer(newPointer);
+  };
 
   const inlineStyles = {
     backgroundSize: `${currentTime}% 100%`,
-  };
-
-  const handleChange = (event: any) => {
-    console.log(event.target.defaultValue);
   };
 
   return (
@@ -21,11 +26,11 @@ function ProgressBar({ audioDuration, audioCurrentTime }: IPros) {
       <input
         type='range'
         className='w-full'
+        value={currentTimeInRaw}
+        onChange={(e) => handleChange(e)}
         min='0'
         max={maxTime}
-        value={currentTimeInRaw}
         style={inlineStyles}
-        onChange={handleChange}
       />
     </div>
   );

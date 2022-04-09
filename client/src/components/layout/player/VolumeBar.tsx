@@ -1,10 +1,12 @@
+import { ChangeEvent } from 'react';
+
 interface IPros {
   progressBar: number;
   onHandleProgress: (arg: number) => void;
 }
 
 function VolumeBar({ progressBar, onHandleProgress }: IPros) {
-  const handleChange = (event: any) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onHandleProgress(+event.target.value);
   };
 

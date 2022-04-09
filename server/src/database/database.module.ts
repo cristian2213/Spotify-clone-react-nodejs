@@ -17,13 +17,7 @@ import config from '../config/env/config';
           POSTGRES_USER,
           POSTGRES_PASSWORD,
         } = configService.databases.postgrest;
-        console.log(
-          POSTGRES_HOST,
-          POSTGRES_PORT,
-          POSTGRES_NAME,
-          POSTGRES_USER,
-          POSTGRES_PASSWORD,
-        );
+
         return {
           type: 'postgres',
           host: POSTGRES_HOST,
