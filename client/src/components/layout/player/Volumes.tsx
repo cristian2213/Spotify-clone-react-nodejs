@@ -1,12 +1,18 @@
+type ComponentType = 'mute' | 'low' | 'medium';
 interface IPros {
-  type?: string;
+  type?: ComponentType;
+  onMute: () => void;
 }
 
-function Volumes({ type }: IPros): JSX.Element {
+function Volumes({ type, onMute }: IPros): JSX.Element {
+  const handleClick = () => {
+    onMute();
+  };
+
   switch (true) {
     case type === 'mute':
       return (
-        <button>
+        <button onClick={handleClick}>
           <svg
             role='presentation'
             height='16'
@@ -24,7 +30,7 @@ function Volumes({ type }: IPros): JSX.Element {
       );
     case type === 'low':
       return (
-        <button>
+        <button onClick={handleClick}>
           <svg
             role='presentation'
             height='16'
@@ -41,7 +47,7 @@ function Volumes({ type }: IPros): JSX.Element {
       );
     case type === 'medium':
       return (
-        <button>
+        <button onClick={handleClick}>
           <svg
             role='presentation'
             height='16'
@@ -58,7 +64,7 @@ function Volumes({ type }: IPros): JSX.Element {
       );
     default:
       return (
-        <button>
+        <button onClick={handleClick}>
           <svg
             role='presentation'
             height='16'

@@ -9,9 +9,7 @@ function LeftNavigation() {
   );
 
   useEffect(() => {
-    return () => {
-      localStorage.setItem('menuSize', JSON.stringify(menuSize));
-    };
+    // localStorage.setItem('menuSize', JSON.stringify(menuSize));
   }, [menuSize]);
 
   const handleSizeChange = useCallback((newSize: number) => {

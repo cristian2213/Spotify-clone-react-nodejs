@@ -13,15 +13,16 @@ import AudioOptions from './AudioOptions';
 function Player() {
   // State
   const [trackIndex, setTrackIndex] = useState(0);
-  // const [trackPro}gress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  //   const [isLoading, setIsLoading] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
+  const [isLoaded, setIsloaded] = useState(false);
 
   const tracks = [
     {
       title: 'Sticky Fingers',
       artist: 'Lekkerboy',
-      audioSrc: './assets/song122.mp3',
+      audioSrc: './assets/song1.mp3',
       image: './assets/metal.jpg',
       color: '#000',
     },
@@ -36,16 +37,51 @@ function Player() {
   ];
   const { title, artist, color, image, audioSrc } = tracks[trackIndex];
   const [audio, setAudioSrc] = useState(new Audio(audioSrc));
-  audio.setAttribute('autoplay', '');
+  // audio.setAttribute('autoplay', '');
+
+  const handleAudioEvents = (event: any) => {
+    const { type } = event;
+    switch (true) {
+      case type === 'canplay':
+        console.log(event.path[0].duration);
+        setAudioDuration(event.path[0].duration);
+        break;
+
+      case type === 'timeupdate':
+        const currentTime = event.path[0].currentTime;
+        setCurrentTime(currentTime);
+        break;
+
+      case type === 'ended':
+        setIsloaded(false);
+        break;
+
+      default:
+        break;
+    }
+  };
 
   // PLAY AND PAUSE
   useEffect(() => {
+    if (!isLoaded) {
+      audio.addEventListener('canplay', handleAudioEvents);
+      audio.addEventListener('timeupdate', handleAudioEvents);
+      audio.addEventListener('ended', handleAudioEvents);
+      setIsloaded(true);
+    }
+
     if (audio.readyState >= 2) {
       if (isPlaying) {
         audio.play();
       } else audio.pause();
     }
-  }, [isPlaying, audio]);
+
+    return () => {
+      // audio.removeEventListener('canplay', handleAudioEvents);
+      // audio.removeEventListener('timeupdate', handleAudioEvents);
+      // audio.removeEventListener('ended', handleAudioEvents);
+    };
+  }, [isPlaying, audio, isLoaded]);
 
   // Handlers
   const toPrevTrack = () => {
@@ -82,6 +118,8 @@ function Player() {
         onPrevClick={toPrevTrack}
         onNextClick={toNextTrack}
         onPlayPauseClick={setIsPlaying}
+        audioDuration={audioDuration}
+        audioCurrentTime={currentTime}
       />
       <AudioOptions />
     </div>

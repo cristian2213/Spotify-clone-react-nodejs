@@ -6,12 +6,15 @@ import {
 } from 'react-icons/bs';
 import { FaRandom } from 'react-icons/fa';
 import { TiArrowRepeat } from 'react-icons/ti';
+import ProgressBar from './ProgressBar';
 
 interface IProps {
   readonly isPlaying: boolean;
   readonly onPlayPauseClick: (arg: boolean) => void;
   readonly onPrevClick: () => void;
   readonly onNextClick: () => void;
+  readonly audioDuration: number;
+  readonly audioCurrentTime: number;
 }
 
 function AudioControls({
@@ -19,6 +22,8 @@ function AudioControls({
   onPlayPauseClick,
   onPrevClick,
   onNextClick,
+  audioDuration,
+  audioCurrentTime,
 }: IProps) {
   return (
     <div className='flex flex-col justify-center items-center w-full'>
@@ -58,17 +63,9 @@ function AudioControls({
           size={27}
         />
       </div>
-      <TrackProgress />
-    </div>
-  );
-}
-
-function TrackProgress() {
-  return (
-    <div className='w-1/2'>
-      <input
-        type='range'
-        className='w-full h-1 bg-[#b3b3b3]  appearance-none rounded custom-thumb'
+      <ProgressBar
+        audioDuration={audioDuration}
+        audioCurrentTime={audioCurrentTime}
       />
     </div>
   );
