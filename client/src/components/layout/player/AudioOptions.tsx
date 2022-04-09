@@ -1,33 +1,53 @@
 import { useState } from 'react';
-import Volumes from './AudioControlVolume';
-
-function ProgressBar() {
-  const [barValue, setBarValue] = useState(100);
-
-  return (
-    <div>
-      <input
-        type='range'
-        className='w-[93px] h-1 bg-black'
-        defaultValue={barValue}
-      />
-    </div>
-  );
-}
+import Volumes from './Volumes';
+import VolumeBar from './VolumeBar';
 
 function AudioOptions() {
-  const progressBar = {
-    width: '42.00%',
+  const [isMute, setIsMute] = useState(false);
+  const [oldProgressBar, setOldProgressBar] = useState(0);
+  const [progressBar, setProgressBar] = useState(100);
+  const low = 33;
+  const medium = 66;
+
+  const handleChange = (newProgress: any) => {
+    setProgressBar(newProgress);
+  };
+
+  const handleMute = () => {
+    setIsMute((preVal) => {
+      const mute = !preVal;
+      if (mute) {
+        setOldProgressBar(progressBar);
+        setProgressBar(0);
+      } else {
+        setProgressBar(oldProgressBar);
+        setOldProgressBar(0);
+      }
+      return mute;
+    });
+  };
+
+  const VolumeIcon = () => {
+    switch (true) {
+      case isMute || progressBar === 0:
+        return <Volumes type='mute' onMute={handleMute} />;
+
+      case progressBar <= low:
+        return <Volumes type='low' onMute={handleMute} />;
+
+      case progressBar > low && progressBar <= medium:
+        return <Volumes type='medium' onMute={handleMute} />;
+
+      default:
+        return <Volumes onMute={handleMute} />;
+    }
   };
 
   return (
-    <div className='min-w-[200px] text-right'>
-      <div className='flex items-center gap-2'>
-        <Volumes type='mute' />
-        <Volumes type='low' />
-        <Volumes type='medium' />
-        <Volumes />
-        <ProgressBar />
+    <div className='min-w-[200px] text-right ml-auto'>
+      <div className='flex items-center gap-2 justify-end'>
+        {VolumeIcon()}
+        <VolumeBar progressBar={progressBar} onHandleProgress={handleChange} />
       </div>
     </div>
   );
