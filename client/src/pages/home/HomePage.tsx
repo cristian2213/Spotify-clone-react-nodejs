@@ -1,7 +1,6 @@
 import { useEffect, useContext } from 'react';
 import SkeletonHome from '../../components/layout/skeletonHome/SkeletonHome';
-import { SongContext } from '../../context/songs/SongProvider';
-
+import { SongContext } from '../../context/songs/SongContext';
 import AlbumsSections from '../../components/album/AlbumsSections';
 
 function HomePage() {
@@ -14,8 +13,6 @@ function HomePage() {
     httpGetSongs();
   }, [httpGetSongs]);
 
-  // const isLoanding = false;
-  // const gotSections: Array<any> = [];
   return (
     <>
       {isLoanding ? (

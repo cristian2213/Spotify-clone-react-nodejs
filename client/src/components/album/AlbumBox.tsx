@@ -1,19 +1,35 @@
-import { MouseEvent } from 'react';
+import { useContext } from 'react';
 import { useState } from 'react';
+import { SongContext } from '../../context/songs/SongContext';
 import PlayBtn from './PlayBtn';
+import { ISongInfo } from '../../context/songs/songInterfaces';
 
+interface ISinger {
+  id: string;
+  name: string;
+  artist: string;
+  img: string;
+  alt: string;
+}
 interface IProps {
-  singer: any;
+  singer: ISinger;
 }
 
 function AlbumBox({ singer }: IProps) {
+  console.log(singer);
   const [isHover, setHover] = useState(false);
+  const { downloadSong } = useContext(SongContext);
 
-  const handleMouseOn = (event: MouseEvent<HTMLLIElement>) => {
-    setHover(true);
-  };
-  const handleMouseOut = (event: MouseEvent<HTMLLIElement>) => {
-    setHover(false);
+  const handleMouseOn = () => setHover(true);
+  const handleMouseOut = () => setHover(false);
+  const handleClick = () => {
+    const songInfo: ISongInfo = {
+      songId: singer.id,
+      image: singer.img,
+      title: singer.name,
+      artist: singer.artist,
+    };
+    downloadSong(songInfo);
   };
 
   const showPlayBtn = isHover ? 'block' : 'hidden';
@@ -29,7 +45,7 @@ function AlbumBox({ singer }: IProps) {
           alt={singer.alt}
           className='block mb-5 rounded-md w-[150px] h-[150px] object-cover'
         />
-        <PlayBtn classes={showPlayBtn} />
+        <PlayBtn classes={showPlayBtn} onClick={handleClick} />
       </div>
       <p className='mb-1 text-white font-bold'>{singer.name}</p>
       <span className='block text-sm leading-[1.2] font-medium text-[#b3b3b3]'>

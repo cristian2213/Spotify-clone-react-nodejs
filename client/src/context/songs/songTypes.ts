@@ -1,1 +1,2 @@
 export const HTTP_GET_SONGS = 'HTTP_GET_SONGS';
+export const HTTP_DOWNLOAD_SONG = 'HTTP_DOWNLOAD_SONG';
