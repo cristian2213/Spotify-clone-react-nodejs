@@ -1,38 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import PlayerAlbum from './PlayerAlbum';
 import AudioControls from './AudioControls ';
 import AudioOptions from './AudioOptions';
-
-const tracks = [
-  {
-    title: 'Sticky Fingers',
-    artist: 'Lekkerboy',
-    audioSrc: './assets/piano1.mp3',
-    image: './assets/metal.jpg',
-    color: '#000',
-  },
-  {
-    title: 'Sticky Fingers',
-    artist: 'Lekkerboy',
-    audioSrc: './assets/song1.mp3',
-    image: './assets/metal.jpg',
-    color: '#000',
-  },
-
-  {
-    title: 'Saves The Day #2',
-    artist: 'Lekkerboy',
-    audioSrc: './assets/song2.mp3',
-    image: './assets/metal2.jpg',
-    color: '#000',
-  },
-];
-
-/* 
-Bugs:
-- Stop song and play another
-- Volume
-*/
+import { SongContext } from '../../../context/songs/SongContext';
 
 function Player() {
   const [trackIndex, setTrackIndex] = useState(0);
@@ -41,33 +11,9 @@ function Player() {
   const [audioDuration, setAudioDuration] = useState(0);
   const [isLoaded, setIsloaded] = useState(false);
 
+  const { currentSongs: tracks } = useContext(SongContext);
   const { title, artist, color, image, audioSrc } = tracks[trackIndex];
   const [audio, setAudioSrc] = useState(new Audio(audioSrc));
-
-  const handleAudioEvents = useCallback(
-    (event: any) => {
-      const { type } = event;
-      switch (true) {
-        case type === 'canplay':
-          setAudioDuration(event.path[0].duration);
-          break;
-
-        case type === 'timeupdate':
-          const currentTime = event.path[0].currentTime;
-          setCurrentTime(currentTime);
-          break;
-
-        case type === 'ended':
-          setIsloaded(false);
-          audio.pause();
-          break;
-
-        default:
-          break;
-      }
-    },
-    [audio]
-  );
 
   useEffect(() => {
     if (!isLoaded) {
@@ -77,10 +23,33 @@ function Player() {
       setIsloaded(true);
     }
 
-    if (isPlaying) {
-      audio.play();
-    } else audio.pause();
-  }, [isPlaying, audio, isLoaded, handleAudioEvents]);
+    if (isPlaying) audio.play();
+    else audio.pause();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaying, audio, isLoaded]);
+
+  useEffect(() => {
+    toNextTrack();
+    if (!isLoaded) setIsPlaying(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tracks, setIsPlaying]);
+
+  const handleAudioEvents = (event: any) => {
+    const { type } = event;
+    switch (true) {
+      case type === 'canplay':
+        setAudioDuration(event.path[0].duration);
+        break;
+      case type === 'timeupdate':
+        const currentTime = event.path[0].currentTime;
+        setCurrentTime(currentTime);
+        break;
+      case type === 'ended':
+        setIsloaded(false);
+        audio.pause();
+        break;
+    }
+  };
 
   const ResetState = () => {
     audio.pause();
@@ -94,7 +63,7 @@ function Player() {
     let index;
     if (trackIndex - 1 < 0) {
       index = tracks.length - 1;
-      setTrackIndex(index); //  last track
+      setTrackIndex(index);
     } else {
       index = trackIndex - 1;
       setTrackIndex(index);
@@ -102,7 +71,6 @@ function Player() {
     ResetState();
     setAudioSrc(new Audio(tracks[index].audioSrc));
   };
-
   const toNextTrack = () => {
     let index;
     if (trackIndex < tracks.length - 1) {
@@ -110,19 +78,15 @@ function Player() {
       setTrackIndex(index);
     } else {
       index = 0;
-      setTrackIndex(index); // first track
+      setTrackIndex(index);
     }
     ResetState();
     setAudioSrc(new Audio(tracks[index].audioSrc));
   };
 
-  const handleVolume = (volume: number) => {
-    audio.volume = volume / 100;
-  };
-
-  const handlePointer = (newPointer: number) => {
-    audio.currentTime = newPointer;
-  };
+  const handleVolume = (volume: number) => (audio.volume = volume / 100);
+  const handlePointer = (newPointer: number) =>
+    (audio.currentTime = newPointer);
 
   return (
     <div className='h-[90px] bg-[#181818] flex flex-row justify-between items-center px-4'>
@@ -140,5 +104,4 @@ function Player() {
     </div>
   );
 }
-
 export default Player;

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import AlbumBox from './AlbumBox';
 
 interface IProps {
@@ -13,6 +13,7 @@ function ListAlbums({ singers }: IProps) {
     return singers.map((singer) => {
       const description = singer.artist.substring(0, LIMIT);
       const name = singer.name.substring(0, LIMIT_NAME);
+
       const shortDescription =
         description.slice(-1) === ' '
           ? description.substring(0, description.length - 1) + '...'

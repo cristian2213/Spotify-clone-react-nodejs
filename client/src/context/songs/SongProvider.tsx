@@ -1,34 +1,35 @@
-import { useReducer, createContext, useCallback } from 'react';
-import { HTTP_GET_SONGS } from './songTypes';
+import { useReducer, useCallback } from 'react';
+import { HTTP_GET_SONGS, HTTP_DOWNLOAD_SONG } from './songTypes';
 import SongReducer from './SongReducer';
 import { httpClient } from '../../config/clientAxios';
 import { Endpoints } from './songEndPoints';
+import { ISong, ISongState, ISongInfo } from './songInterfaces';
+import { SongContext } from './SongContext';
 
 const APP_HTTP_SERVER = process.env.REACT_APP_HTTP_SERVER;
-
-interface ISongState {
-  sections: Array<any>;
-  isLoanding: boolean;
-}
-type HttpFunction = () => any;
-interface ISongContext {
-  sections: Array<any>;
-  httpGetSongs: HttpFunction;
-}
-export const SongContext = createContext({
-  sections: [],
-  isLoanding: true,
-  httpGetSongs: () => {},
-});
+const APP_STATIC_FILES = process.env.REACT_APP_STATIC_FILES;
 
 export function SongProvider({ children }: any) {
   const initialState: ISongState = {
     sections: [],
     isLoanding: true,
+    currentSongs: [
+      // BY default
+      {
+        title: 'Saves',
+        artist: 'Sticky Fingers',
+        audioSrc: APP_STATIC_FILES + '/XZm3TKMZXJ4-1649867143735.mp3',
+        image:
+          'https://i.ytimg.com/vi/XZm3TKMZXJ4/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBPfWHQuxdTxI0j3MHo5CMvCBXJuw',
+      },
+    ] as ISong[],
   };
 
   const [songState, dispatch] = useReducer(SongReducer, initialState);
 
+  /**
+   * httpGetSongs - Returns all songs
+   */
   const httpGetSongs = useCallback(async () => {
     try {
       const URL = `${APP_HTTP_SERVER}${Endpoints.GetSongs}`;
@@ -41,29 +42,39 @@ export function SongProvider({ children }: any) {
         type: HTTP_GET_SONGS,
         data: httpRes.data,
       });
-    } catch (error) {
-      // DOTO SOMETHING
-      // console.log(error);
-    }
+    } catch (error) {}
   }, []);
 
-  const httpGetOneSong = useCallback(async (params) => {
+  /**
+   * downloadSong - Downloads one song in the server-side and returns the name of the file
+   */
+  const downloadSong = async (song: ISongInfo) => {
     try {
-      const URL = `${APP_HTTP_SERVER}${Endpoints.GetSongs}`;
+      const { songId } = song;
+
+      const URL = `${APP_HTTP_SERVER}${Endpoints.DownloadSong}`;
       const httpRes = await httpClient.get(URL, {
-        params,
+        params: {
+          query: songId.split('-')[0],
+        },
       });
-      return httpRes.data[0];
-    } catch (error: any) {
-      return true;
-    }
-  }, []);
+
+      dispatch({
+        type: HTTP_DOWNLOAD_SONG,
+        data: {
+          ...song,
+          ...httpRes.data,
+        },
+      });
+    } catch (error) {}
+  };
 
   const contextProvider = {
     sections: songState.sections,
     isLoanding: songState.isLoanding,
+    currentSongs: songState.currentSongs,
     httpGetSongs,
-    httpGetOneSong,
+    downloadSong,
   };
 
   return (

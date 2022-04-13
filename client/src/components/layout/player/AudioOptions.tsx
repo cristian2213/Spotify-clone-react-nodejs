@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Volumes from './Volumes';
 import VolumeBar from './VolumeBar';
 
@@ -38,13 +38,10 @@ function AudioOptions({ onVolume }: IPros) {
     switch (true) {
       case isMute || progressBar === 0:
         return <Volumes type='mute' onMute={handleMute} />;
-
       case progressBar <= low:
         return <Volumes type='low' onMute={handleMute} />;
-
       case progressBar > low && progressBar <= medium:
         return <Volumes type='medium' onMute={handleMute} />;
-
       default:
         return <Volumes onMute={handleMute} />;
     }

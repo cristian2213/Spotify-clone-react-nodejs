@@ -1,11 +1,15 @@
+import { MouseEvent } from 'react';
+
 interface IProps {
   classes: string;
+  onClick: () => void;
 }
 
-function PlayBtn({ classes }: IProps) {
+function PlayBtn({ classes, onClick }: IProps) {
   return (
     <div
       className={`card-play-button bg-[#1ed760] w-12 h-12 rounded-full flex items-center justify-center hover:bg-[#1fdf64] hover:scale-105 ${classes}`}
+      onClick={onClick}
     >
       <svg
         role='img'
