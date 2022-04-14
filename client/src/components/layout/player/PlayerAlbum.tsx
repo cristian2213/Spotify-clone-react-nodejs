@@ -22,7 +22,7 @@ function PlayerAlbum({ title, artist, image }: IProps) {
   };
 
   return (
-    <div className='flex flex-row gap-4'>
+    <div className='flex flex-row gap-4 w-[20%]'>
       <div className='cursor-pointer relative'>
         <img
           className='block min-w-[56px] min-h-[56px] max-w-[56px] max-h-[56px] rounded object-cover object-center'
@@ -31,7 +31,7 @@ function PlayerAlbum({ title, artist, image }: IProps) {
         />
       </div>
 
-      <div className='flex flex-col justify-center items-start mr-3'>
+      <div className='flex flex-col justify-center items-start mr-3 w-full'>
         <Link className='block text-white text-[13px] font-semibold' to='/'>
           {title}
         </Link>

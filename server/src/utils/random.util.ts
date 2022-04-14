@@ -12,7 +12,6 @@ export class GlobalRandom {
     'Etude Op. 36 | BLUMENFELD | Luke Faulkner',
     'Étude in F major | ROMANTIC PIANO | Luke Faulkner',
     'Daydreaming - Luke Faulkner',
-    'Chopin - Nocturne op.9 No.2',
     'Beethoven - Für Elise (Piano Version)',
     'Moonlight Sonata: Adagio Sostenuto',
     'Chopin - Nocturne op.9 No.2',

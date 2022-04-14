@@ -1,4 +1,3 @@
-import { MouseEvent } from 'react';
 
 interface IProps {
   classes: string;

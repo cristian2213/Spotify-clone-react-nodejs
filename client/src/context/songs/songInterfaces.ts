@@ -2,6 +2,8 @@ export interface ISongState {
   sections: Array<any>;
   isLoanding: boolean;
   currentSongs: Array<any>;
+  isSearching: boolean;
+  searches: Array<any>;
 }
 
 export interface ISong {
@@ -19,4 +21,3 @@ export interface ISongInfo {
   title: string;
   artist: string;
 }
-

@@ -1,5 +1,10 @@
 import { useReducer, useCallback } from 'react';
-import { HTTP_GET_SONGS, HTTP_DOWNLOAD_SONG } from './songTypes';
+import {
+  HTTP_GET_SONGS,
+  HTTP_DOWNLOAD_SONG,
+  HTTP_IS_SEARCHING,
+  HTTP_SEARCHES,
+} from './songTypes';
 import SongReducer from './SongReducer';
 import { httpClient } from '../../config/clientAxios';
 import { Endpoints } from './songEndPoints';
@@ -14,15 +19,16 @@ export function SongProvider({ children }: any) {
     sections: [],
     isLoanding: true,
     currentSongs: [
-      // BY default
       {
         title: 'Saves',
         artist: 'Sticky Fingers',
-        audioSrc: APP_STATIC_FILES + '/XZm3TKMZXJ4-1649867143735.mp3',
+        audioSrc: APP_STATIC_FILES + '/XZm3TKMZXJ4-1649885930286.mp3',
         image:
           'https://i.ytimg.com/vi/XZm3TKMZXJ4/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBPfWHQuxdTxI0j3MHo5CMvCBXJuw',
       },
     ] as ISong[],
+    isSearching: false,
+    searches: [],
   };
 
   const [songState, dispatch] = useReducer(SongReducer, initialState);
@@ -43,6 +49,26 @@ export function SongProvider({ children }: any) {
         data: httpRes.data,
       });
     } catch (error) {}
+  }, []);
+
+  /**
+   * Search songs - Returns all songs
+   */
+  const searchSong = useCallback(async (params) => {
+    try {
+      handleIsSearching(true);
+      const URL = `${APP_HTTP_SERVER}${Endpoints.GetSongs}`;
+      const httpRes = await httpClient.get(URL, {
+        params: { ...params },
+      });
+      dispatch({
+        type: HTTP_SEARCHES,
+        data: httpRes.data,
+      });
+    } catch (error) {
+    } finally {
+      handleIsSearching(false);
+    }
   }, []);
 
   /**
@@ -69,12 +95,23 @@ export function SongProvider({ children }: any) {
     } catch (error) {}
   };
 
+  const handleIsSearching = (reqStatus: boolean) => {
+    dispatch({
+      type: HTTP_IS_SEARCHING,
+      data: reqStatus,
+    });
+  };
+
   const contextProvider = {
     sections: songState.sections,
     isLoanding: songState.isLoanding,
     currentSongs: songState.currentSongs,
+    isSearching: songState.isSearching,
+    searches: songState.searches,
     httpGetSongs,
     downloadSong,
+    searchSong,
+    handleIsSearching,
   };
 
   return (

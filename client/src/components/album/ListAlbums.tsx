@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useMemo } from 'react';
 import AlbumBox from './AlbumBox';
 
@@ -6,10 +8,44 @@ interface IProps {
 }
 
 function ListAlbums({ singers }: IProps) {
-  const LIMIT = 14;
-  const LIMIT_NAME = 24;
+  const containerRef = useRef<any>();
+  const [li, setLi] = useState<Node|null>(null);
+  const [isResizeDone, setIsResizeDone] = useState(false);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const resizeObserver = new ResizeObserver(handleResizeObserver);
+      resizeObserver.observe(containerRef.current);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [containerRef, isResizeDone]);
+
+  const handleResizeObserver: ResizeObserverCallback = (
+    entries: ResizeObserverEntry[]
+  ) => {
+    const entry = entries[0];
+    const lastChild = entry.target.lastChild as ChildNode;
+    const heightSize = Math.ceil(entry.contentRect.height);
+    const widthSize = Math.ceil(entry.contentRect.width);
+    const y = 271;
+    const x = 1212;
+    switch (true) {
+      case heightSize > y && !isResizeDone:
+        setLi(lastChild);
+        lastChild.remove();
+        setIsResizeDone(true);
+        break;
+
+      case widthSize >= x && isResizeDone:
+        entry.target.append(li!);
+        setIsResizeDone(false);
+        break;
+    }
+  };
 
   const leakedSingers = useMemo(() => {
+    const LIMIT = 14;
+    const LIMIT_NAME = 24;
     return singers.map((singer) => {
       const description = singer.artist.substring(0, LIMIT);
       const name = singer.name.substring(0, LIMIT_NAME);
@@ -34,7 +70,10 @@ function ListAlbums({ singers }: IProps) {
   }, [singers]);
 
   return (
-    <ul className='custom-grid-home justify-items-center items-center'>
+    <ul
+      className='custom-grid-home justify-items-center items-center'
+      ref={containerRef}
+    >
       {leakedSingers.map((singer) => (
         <AlbumBox singer={singer} key={singer.id} />
       ))}

@@ -16,7 +16,6 @@ interface IProps {
 }
 
 function AlbumBox({ singer }: IProps) {
-  console.log(singer);
   const [isHover, setHover] = useState(false);
   const { downloadSong } = useContext(SongContext);
 
@@ -35,7 +34,13 @@ function AlbumBox({ singer }: IProps) {
   const showPlayBtn = isHover ? 'block' : 'hidden';
   return (
     <li
-      className='w-[182px] h-auto min-h-[264px]  p-4 rounded-md bg-[#181818] cursor-pointer hover:bg-[#282828] transition-all'
+      className='w-[182px] h-auto min-h-[264px] 
+        p-4 
+        rounded-md 
+        bg-[#181818] 
+        hover:bg-[#282828] 
+        cursor-pointer
+        transition-all'
       onMouseOver={handleMouseOn}
       onMouseOut={handleMouseOut}
     >

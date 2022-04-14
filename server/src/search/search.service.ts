@@ -31,9 +31,8 @@ export class SearchService {
     total: RanTotalDto,
   ): Promise<Song[]> {
     const defLimit = (limit as unknown as number) || this.defaultLimit;
-
     let songs: Song[];
-
+    console.log(defLimit)
     if (+random == 1) {
       let i = 1;
       const limit = 12;

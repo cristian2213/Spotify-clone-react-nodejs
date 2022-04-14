@@ -1,4 +1,9 @@
-import { HTTP_GET_SONGS, HTTP_DOWNLOAD_SONG } from './songTypes';
+import {
+  HTTP_GET_SONGS,
+  HTTP_DOWNLOAD_SONG,
+  HTTP_IS_SEARCHING,
+  HTTP_SEARCHES,
+} from './songTypes';
 const APP_STATIC_FILES = process.env.REACT_APP_STATIC_FILES;
 
 function SongReducer(state: any, action: any) {
@@ -52,6 +57,18 @@ function SongReducer(state: any, action: any) {
       return {
         ...state,
         currentSongs,
+      };
+
+    case type === HTTP_IS_SEARCHING:
+      return {
+        ...state,
+        isSearching: action.data,
+      };
+
+    case type === HTTP_SEARCHES:
+      return {
+        ...state,
+        searches: action.data,
       };
     default:
       return state;

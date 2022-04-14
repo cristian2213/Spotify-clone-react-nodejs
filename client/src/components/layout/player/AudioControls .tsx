@@ -28,7 +28,7 @@ function AudioControls({
   handlePointer,
 }: IProps) {
   return (
-    <div className='flex flex-col justify-center items-center w-full'>
+    <div className='flex flex-col justify-center items-center w-[80%]'>
       <div className='audio-controls text-black flex flex-row items-center gap-4'>
         <FaRandom
           className='text-[#b3b3b3] hover:text-white transition-all'

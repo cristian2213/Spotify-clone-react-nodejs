@@ -9,10 +9,10 @@ function HomePage() {
     sections: gotSections,
     isLoanding,
   } = useContext(SongContext);
+
   useEffect(() => {
     httpGetSongs();
   }, [httpGetSongs]);
-
   return (
     <>
       {isLoanding ? (
