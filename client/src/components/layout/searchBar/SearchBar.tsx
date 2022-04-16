@@ -1,5 +1,5 @@
 import { BsSearch, BsXLg } from 'react-icons/bs';
-import { useRef, useState, useContext } from 'react';
+import { useRef, useState, useContext, ChangeEvent } from 'react';
 import { SongContext } from '../../../context/songs/SongContext';
 
 let timer: any;
@@ -7,19 +7,19 @@ let timer: any;
 function SearchBar() {
   const inputRef = useRef<any>();
   const [searchInput, setSearchInput] = useState('');
-  const { searchSong } = useContext(SongContext);
+  const { searchSong, clearSearches } = useContext(SongContext);
 
-  const handleFocus = (event: any) => {
+  const handleFocus = () => {
     inputRef.current.focus();
   };
 
-  const handleSearch = (event: any) => {
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
     clearTimeout(timer);
     timer = setTimeout(() => {
       const params = {
         search: searchInput.trim().split(' ').join('-'),
-        limit: 10,
+        limit: 12,
       };
       searchSong(params);
     }, 800);
@@ -27,6 +27,7 @@ function SearchBar() {
 
   const handleCleanInput = () => {
     setSearchInput('');
+    clearSearches();
   };
 
   return (

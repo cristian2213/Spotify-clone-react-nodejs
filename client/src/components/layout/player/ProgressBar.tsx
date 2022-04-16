@@ -22,7 +22,7 @@ function ProgressBar({ audioDuration, audioCurrentTime, onPointer }: IPros) {
   };
 
   return (
-    <div className='w-1/2'>
+    <div className='w-[90%] mx-auto'>
       <input
         type='range'
         className='w-full'

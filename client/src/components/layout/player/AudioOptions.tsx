@@ -48,7 +48,7 @@ function AudioOptions({ onVolume }: IPros) {
   };
 
   return (
-    <div className='min-w-[200px] w-[20%] text-right ml-auto'>
+    <div className='w-[30%] text-right ml-auto'>
       <div className='flex items-center gap-2 justify-end'>
         {VolumeIcon()}
         <VolumeBar progressBar={progressBar} onHandleProgress={handleChange} />

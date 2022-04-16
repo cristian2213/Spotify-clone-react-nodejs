@@ -32,7 +32,7 @@ export class SearchService {
   ): Promise<Song[]> {
     const defLimit = (limit as unknown as number) || this.defaultLimit;
     let songs: Song[];
-    console.log(defLimit)
+
     if (+random == 1) {
       let i = 1;
       const limit = 12;
@@ -47,7 +47,6 @@ export class SearchService {
       const mappedSongs = this.globalMap.mapSongs(items);
       songs = mappedSongs;
     }
-
     return songs;
   }
 

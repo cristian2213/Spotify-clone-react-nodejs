@@ -4,6 +4,7 @@ import {
   HTTP_DOWNLOAD_SONG,
   HTTP_IS_SEARCHING,
   HTTP_SEARCHES,
+  CLEAR_SEARCHES,
 } from './songTypes';
 import SongReducer from './SongReducer';
 import { httpClient } from '../../config/clientAxios';
@@ -95,10 +96,23 @@ export function SongProvider({ children }: any) {
     } catch (error) {}
   };
 
+  /**
+   * Set request to true
+   */
   const handleIsSearching = (reqStatus: boolean) => {
     dispatch({
       type: HTTP_IS_SEARCHING,
       data: reqStatus,
+    });
+  };
+
+  /**
+   * Clear all searching songs
+   */
+  const clearSearches = () => {
+    dispatch({
+      type: CLEAR_SEARCHES,
+      data: [],
     });
   };
 
@@ -112,6 +126,7 @@ export function SongProvider({ children }: any) {
     downloadSong,
     searchSong,
     handleIsSearching,
+    clearSearches,
   };
 
   return (

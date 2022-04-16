@@ -1,5 +1,5 @@
 function PlaylistPage() {
-  return <div>PlaylistPage</div>;
+  return <div>Coming... 🛠️</div>;
 }
 
 export default PlaylistPage;

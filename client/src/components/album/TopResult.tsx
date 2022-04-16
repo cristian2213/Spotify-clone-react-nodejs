@@ -6,7 +6,9 @@ function TopResult({ song }: any) {
     <div className='w-2/5'>
       <SongTitle
         title='Top result'
-        className='mb-6 text-white font-bold text-[24px]'
+        domProps={{
+          className: 'mb-6 text-white font-bold text-[24px]',
+        }}
       />
 
       <TopResultCard song={song} />

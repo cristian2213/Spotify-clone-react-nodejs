@@ -29,6 +29,7 @@ function ListAlbums({ singers }: IProps) {
     const widthSize = Math.ceil(entry.contentRect.width);
     const y = 271;
     const x = 1212;
+    
     switch (true) {
       case heightSize > y && !isResizeDone:
         setLi(lastChild);

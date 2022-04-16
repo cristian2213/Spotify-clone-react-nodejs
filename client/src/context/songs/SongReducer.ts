@@ -3,6 +3,7 @@ import {
   HTTP_DOWNLOAD_SONG,
   HTTP_IS_SEARCHING,
   HTTP_SEARCHES,
+  CLEAR_SEARCHES
 } from './songTypes';
 const APP_STATIC_FILES = process.env.REACT_APP_STATIC_FILES;
 
@@ -66,6 +67,12 @@ function SongReducer(state: any, action: any) {
       };
 
     case type === HTTP_SEARCHES:
+      return {
+        ...state,
+        searches: action.data,
+      };
+
+    case type === CLEAR_SEARCHES:
       return {
         ...state,
         searches: action.data,

@@ -1,5 +1,5 @@
 function CollectionsPage() {
-  return <div>CollectionsPage</div>;
+  return <div>Coming... 🛠️</div>;
 }
 
 export default CollectionsPage;

@@ -15,14 +15,15 @@ function SearchPage() {
     return <TopResult song={song} />;
   }
 
-  let topSearch = [];
-  let filteredSearches = [];
+  let topSearch;
+  let filteredSearches: never[] = [];
   if (searches.length > 6) {
     for (let i = 0; i < 6; i++) {
       if (i !== 0) {
         filteredSearches.push(searches[i]);
+        continue;
       }
-      topSearch.push(searches[i]);
+      topSearch = searches[i];
     }
   } else {
     topSearch = searches[0];
@@ -31,9 +32,8 @@ function SearchPage() {
 
   return (
     <div className='flex items-start justify-between gap-6'>
-      <TopResult />
-      {/* filteredSearches */}
-      <ListSongs />
+      <TopResult song={topSearch} />
+      <ListSongs songs={filteredSearches} />
     </div>
   );
 }

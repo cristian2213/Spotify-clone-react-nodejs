@@ -6,6 +6,7 @@ export const SongContext = createContext({
   httpGetSongs: () => {},
   downloadSong: (arg: any) => {},
   searchSong: (arg: any) => {},
+  clearSearches: () => {},
   currentSongs: [
     {
       title: '',

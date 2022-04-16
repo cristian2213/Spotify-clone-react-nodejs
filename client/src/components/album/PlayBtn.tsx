@@ -1,7 +1,6 @@
-
 interface IProps {
   classes: string;
-  onClick: () => void;
+  onClick: (event?: any) => void;
 }
 
 function PlayBtn({ classes, onClick }: IProps) {

@@ -1,23 +1,12 @@
-import { useState } from 'react';
+import { useState, MouseEvent, useContext } from 'react';
+import { SongContext } from '../../context/songs/SongContext';
+import { ISongInfo } from '../../context/songs/songInterfaces';
 import PlayBtn from './PlayBtn';
 
 function TopResultCard({ song }: any) {
-  console.log(song);
   const [isHover, setHover] = useState(false);
-  const handleMouseOn = () => setHover(true);
-  const handleMouseOut = () => setHover(false);
-
-  const handleClick = () => {
-    // const songInfo: ISongInfo = {
-    //   songId: '',
-    //   image: '',
-    //   title: '',
-    //   artist: '',
-    // };
-    // downloadSong(songInfo);
-  };
-  const topResultClasses = `${isHover ? 'block' : 'hidden'} bottom-6 right-6`;
-
+  const { downloadSong } = useContext(SongContext);
+  
   const regex = /[-_@)(!=#%&/|?¿¡<>:;.,]$/g;
   const shortTitle =
     song.title.length < 16
@@ -30,11 +19,30 @@ function TopResultCard({ song }: any) {
     song.author.name.length < 29
       ? song.author.name
       : song.author.name.slice(0, 28);
+  
+  const handleMouseOn = () => setHover(true);
+  const handleMouseOut = () => setHover(false);
+
+  const handleClick = (event: MouseEvent<any>) => {
+    event.stopPropagation();
+    const songInfo: ISongInfo = {
+      songId: song.id,
+      image: song.thumbnail.url,
+      title: shortTitle,
+      artist: shortAuthor,
+    };
+    downloadSong(songInfo);
+  };
+  const topResultClasses = `${isHover ? 'block' : 'hidden'} bottom-6 right-6`;
+
+
+
   return (
     <div
       className='cursor-pointer p-5 relative rounded-lg bg-[#181818] hover:bg-[#282828] transition-all'
       onMouseOver={handleMouseOn}
       onMouseOut={handleMouseOut}
+      onClick={handleClick}
     >
       <img
         src={song.thumbnail.url}
