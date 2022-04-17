@@ -9,35 +9,47 @@ interface IProps {
 
 function ListAlbums({ singers }: IProps) {
   const containerRef = useRef<any>();
-  const [isResized, setIsResized] = useState(false);
-  const [breakPoint, setBreakPoint] = useState(0);
+  const [breakPoint, setBreakPoint] = useState<number[]>([]);
 
   useEffect(() => {
     let observer: any;
-    const resizeObserver = new ResizeObserver((entries: any) => {
+    const resizeObserver = new ResizeObserver((entries) => {
       const entry = entries[0];
       const heightSize = Math.ceil(entry.contentRect.height);
       const widthSize = Math.ceil(entry.contentRect.width);
       const defaultHeight = 271;
+      const target = entry.target;
 
-      if (heightSize > defaultHeight && !isResized) {
-        setBreakPoint(widthSize);
-        entry.target.lastChild.classList.add('hidden');
-        setIsResized(true);
-      } else if (widthSize > breakPoint && isResized) {
-        entry.target.lastChild.classList.remove('hidden');
-        setIsResized(false);
+      if (heightSize > defaultHeight) {
+        setBreakPoint((preBreakPoint: number[]) => [
+          widthSize,
+          ...preBreakPoint,
+        ]);
+        const items = target.querySelectorAll('li:not(.hidden)');
+        const lastItem = items[items.length - 1];
+        lastItem.classList.add('hidden');
+      } else if (widthSize > breakPoint[0]) {
+        const hiddienItems = target.querySelectorAll('li[class*="hidden"]');
+        if (hiddienItems.length !== 0) {
+          hiddienItems[0].classList.remove('hidden');
+          setBreakPoint((preBreakPoint: number[]) => {
+            const oldBreakPoint = breakPoint[0];
+            return preBreakPoint.filter(
+              (breakPoint: number) => breakPoint !== oldBreakPoint
+            );
+          });
+        }
       }
     });
     if (containerRef.current) {
       observer = containerRef.current;
       resizeObserver.observe(observer);
     }
-
     return () => {
       resizeObserver.unobserve(observer);
     };
-  }, [breakPoint, isResized]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [breakPoint]);
 
   const leakedSingers = useMemo(() => {
     const LIMIT = 14;
@@ -69,6 +81,7 @@ function ListAlbums({ singers }: IProps) {
     <ul
       className='custom-grid-home justify-items-center items-center'
       ref={containerRef}
+      id='myList'
     >
       {leakedSingers.map((singer: any) => (
         <AlbumBox singer={singer} key={singer.id} />

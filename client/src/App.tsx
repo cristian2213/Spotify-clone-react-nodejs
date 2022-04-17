@@ -8,15 +8,6 @@ import PlaylistPage from './pages/playlist/PlaylistPage';
 import TracksPage from './pages/tracks/TracksPage';
 
 function App() {
-  // 0. Use SWR and Skeleton to better UI&UX ✅
-  // 1. Make to the main content resize dragging ✅
-  // 2. Create progress bar and program it ✅
-  // 3. Create controlls to the player ✅
-  // 5. Recieve song in stream from the server ❌
-  // 6. Create search page ❌
-  // 8. Create unit-testing, integration-testing and end-two-end-testing ❌
-  // 9. Deploy ❌
-
   return (
     <Routes>
       <Route path='/' element={<AppLayout />}>
