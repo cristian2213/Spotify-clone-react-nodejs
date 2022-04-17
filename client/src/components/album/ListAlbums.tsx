@@ -9,45 +9,40 @@ interface IProps {
 
 function ListAlbums({ singers }: IProps) {
   const containerRef = useRef<any>();
-  const [li, setLi] = useState<Node|null>(null);
-  const [isResizeDone, setIsResizeDone] = useState(false);
+  const [isResized, setIsResized] = useState(false);
+  const [breakPoint, setBreakPoint] = useState(0);
 
   useEffect(() => {
+    let observer: any;
+    const resizeObserver = new ResizeObserver((entries: any) => {
+      const entry = entries[0];
+      const heightSize = Math.ceil(entry.contentRect.height);
+      const widthSize = Math.ceil(entry.contentRect.width);
+      const defaultHeight = 271;
+
+      if (heightSize > defaultHeight && !isResized) {
+        setBreakPoint(widthSize);
+        entry.target.lastChild.classList.add('hidden');
+        setIsResized(true);
+      } else if (widthSize > breakPoint && isResized) {
+        entry.target.lastChild.classList.remove('hidden');
+        setIsResized(false);
+      }
+    });
     if (containerRef.current) {
-      const resizeObserver = new ResizeObserver(handleResizeObserver);
-      resizeObserver.observe(containerRef.current);
+      observer = containerRef.current;
+      resizeObserver.observe(observer);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [containerRef, isResizeDone]);
 
-  const handleResizeObserver: ResizeObserverCallback = (
-    entries: ResizeObserverEntry[]
-  ) => {
-    const entry = entries[0];
-    const lastChild = entry.target.lastChild as ChildNode;
-    const heightSize = Math.ceil(entry.contentRect.height);
-    const widthSize = Math.ceil(entry.contentRect.width);
-    const y = 271;
-    const x = 1212;
-    
-    switch (true) {
-      case heightSize > y && !isResizeDone:
-        setLi(lastChild);
-        lastChild.remove();
-        setIsResizeDone(true);
-        break;
-
-      case widthSize >= x && isResizeDone:
-        entry.target.append(li!);
-        setIsResizeDone(false);
-        break;
-    }
-  };
+    return () => {
+      resizeObserver.unobserve(observer);
+    };
+  }, [breakPoint, isResized]);
 
   const leakedSingers = useMemo(() => {
     const LIMIT = 14;
     const LIMIT_NAME = 24;
-    return singers.map((singer) => {
+    return singers.map((singer: any) => {
       const description = singer.artist.substring(0, LIMIT);
       const name = singer.name.substring(0, LIMIT_NAME);
 
@@ -75,7 +70,7 @@ function ListAlbums({ singers }: IProps) {
       className='custom-grid-home justify-items-center items-center'
       ref={containerRef}
     >
-      {leakedSingers.map((singer) => (
+      {leakedSingers.map((singer: any) => (
         <AlbumBox singer={singer} key={singer.id} />
       ))}
     </ul>
