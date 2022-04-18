@@ -1,0 +1,28 @@
+{
+  "name": "spotify-clone",
+  "version": "1.0.0",
+  "description": "<div id=\"top\"></div>",
+  "main": "index.js",
+  "scripts": {
+    "install-server": "npm install --prefix server",
+    "install-client": "npm install --prefix client",
+    "install": "npm run install-server && npm run install-client",
+    "server": "npm run start:dev --prefix server",
+    "client": "npm start --prefix client",
+    "watch": "npm run server & npm run client",
+    "deploy": "npm run build --prefix client && npm run start:prod --prefix server",
+    "deploy-cluster": "npm run cluster --prefix server",
+    "test": "npm test --prefix server && npm test --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristian2213/Spotify-clone-react-nodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cristian2213/Spotify-clone-react-nodejs/issues"
+  },
+  "homepage": "https://github.com/cristian2213/Spotify-clone-react-nodejs#readme"
+}

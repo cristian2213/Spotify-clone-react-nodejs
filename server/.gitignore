@@ -39,3 +39,10 @@ src/config/postgres_data*
 
 # STATIC FILES
 storage/
+
+# ENV
+.env
+.dev.env
+.stag.env
+
+

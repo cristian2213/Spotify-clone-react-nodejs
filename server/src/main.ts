@@ -23,11 +23,11 @@ async function bootstrap() {
     .setDescription('Api clone wiht Nestjs, React, and GraphQL')
     .setVersion('1.0')
     .addBearerAuth({ in: 'header', type: 'http' })
-    .addServer('v1')
+    .addServer(process.env.APP_HOST)
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/', app, document, {
+  SwaggerModule.setup('/docs', app, document, {
     explorer: true,
     swaggerOptions: {
       filter: true,

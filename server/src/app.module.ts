@@ -23,11 +23,15 @@ import { DownloadAudioModule } from './download-audio/download-audio.module';
       isGlobal: true,
       validationSchema: envValidation,
     }),
-
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'storage'),
+      rootPath: join(__dirname, 'storage'),
       exclude: ['/api'],
     }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, 'client'),
+    //   renderPath: '*',
+    //   exclude: ['/api'],
+    // }),
     DatabaseModule,
     UsersModule,
     AuthModule,

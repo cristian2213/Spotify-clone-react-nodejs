@@ -23,7 +23,7 @@ export class DownloadAudioService {
       throw new BadRequestException('The "query" param cannot be null');
 
     try {
-      const path = join(__dirname, '..', '..', 'storage');
+      const path = join(__dirname, '..', 'storage');
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path, {
           recursive: true,

@@ -28,7 +28,8 @@
     "migrations:drop": "npm run typeorm -- migration:drop",
     "seed:generate": "npm run typeorm migration:generate -c seed -n ",
     "seed:run": "npm run typeorm migration:run -c seed",
-    "seed:revert": "npm run typeorm migration:revert -c seed"
+    "seed:revert": "npm run typeorm migration:revert -c seed",
+    "cluster": "pm2 start dist/main.js -i max"
   },
   "dependencies": {
     "@nestjs/common": "^8.4.3",
@@ -53,9 +54,11 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pg": "^8.7.3",
+    "pm2": "^5.2.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "spotify-clone": "file:..",
     "swagger-ui-express": "^4.3.0",
     "ts-morph": "^13.0.3",
     "typeorm": "^0.2.37",
