@@ -25,13 +25,9 @@ import { DownloadAudioModule } from './download-audio/download-audio.module';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, 'storage'),
+      serveRoot: '',
       exclude: ['/api'],
     }),
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, 'client'),
-    //   renderPath: '*',
-    //   exclude: ['/api'],
-    // }),
     DatabaseModule,
     UsersModule,
     AuthModule,

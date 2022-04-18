@@ -10,16 +10,16 @@
   <h3 align="center">Spotify Clone</h3>
 
   <p align="center">
-    Spotify Clone BY me Cristian.
+    Spotify Clone BY me cristian2213
     <br />
     <!-- <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a> -->
     <!-- <br /> -->
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://spotify-clone-by-cristian2213.netlify.app/">View Demo (Just Front-end, I'm looking for back-end provider)</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/cristian2213/Spotify-clone-react-nodejs/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/cristian2213/Spotify-clone-react-nodejs/issues">Request Feature</a>
   </p>
 </div>
 
@@ -55,7 +55,7 @@
 ## About The Project
 
 <a id="about-the-project"></a>
-I want to create an exacly clone of Spotify with React and Node.js and with a little feature, this app is gonna include support to PWS (Progressive web Apps)
+This is a Spotify clone created with Nests and React, currently client and server are working well, but I can just deploy the front-end, because of on the back-end side I need money to pay by a cloud provider, since I'm using more than one docker container and I need a provider with support to Kubernetes, but If you want to test this project, you must execute it locally in your environment.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -65,14 +65,10 @@ I want to create an exacly clone of Spotify with React and Node.js and with a li
 These are the technologies with which this project is being built:
 
 - [TypeScript](https://www.typescriptlang.org/)
-- [Node.js](https://nodejs.org/)
-- [Express](https://expressjs.com/)
 - [Nestjs](https://nestjs.com/)
-- [ApolloServer](https://www.apollographql.com/docs/apollo-server/#:~:text=Apollo%20Server%20is%20an%20open,use%20data%20from%20any%20source.)
 - [PostgreSQL](https://www.postgresql.org/)
 - [TypeORM](https://typeorm.io/)
 - [React](https://reactjs.org/)
-- [ApolloClient](https://www.apollographql.com/docs/react/)
 - [Jest](https://jestjs.io/)
 - [SuperTest](https://github.com/visionmedia/supertest#readme)
 - [Swagger](https://swagger.io/)
@@ -90,6 +86,13 @@ These are the technologies with which this project is being built:
 ## Songs
 
 ![Songs](./imgs/songs.png?raw=true 'Songs')
+
+<br/>
+<br/>
+
+## Songs
+
+![Search](./imgs/look.png?raw=true 'Search')
 
 <br/>
 <br/>
@@ -120,33 +123,55 @@ _To run this project, please follow the steps below to Node.js._
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/cristian2213/e-commerce-api.git
+   git clone https://github.com/cristian2213/Spotify-clone-react-nodejs
    ```
 2. Run services
    ```sh
    docker-compose up -d
    ```
-3. Create a .env file in the root and paste this variables:
+3. Create a .env file in the server folder and paste this variables:
+
    ```js
-   APP_PORT=3000
-   APP_HOST=127.0.0.1
-   DB_CONNECTION=mysql
-   MYSQL_HOST=127.0.0.1
-   MYSQL_DATABASE=e-commerce-app-01
-   MYSQL_PORT=3306
-   MYSQL_USER=root
-   MYSQL_ROOT_PASSWORD=123456
-   JWT_SECRET=yourKey
-   SENDGRID_API_KEY=youCanCreateAKeyInSendGridIsFree
-   SENDGRID_EMAIL_FROM=emailToSendEmailVerification
+    APP_NAME=spotify
+    APP_PORT=8080
+    APP_HOST=http://localhost:8080/v1/
+
+    DB_TYPE=postgres
+    POSTGRES_HOST=localhost
+    POSTGRES_NAME=spotify-db
+    POSTGRES_USER=root
+    POSTGRES_PASSWORD=123456
+    POSTGRES_PORT=5432
+
+    TYPEORM_CONNECTION=postgres
+    TYPEORM_HOST=localhost
+    TYPEORM_USERNAME=root
+    TYPEORM_PASSWORD=123456
+    TYPEORM_DATABASE=spotify-db
+    TYPEORM_PORT=5432
+    TYPEORM_SYNCHRONIZE=false
+    TYPEORM_LOGGING=true
+    TYPEORM_ENTITIES=src/**/*.entity.ts
+    TYPEORM_MIGRATIONS='src/database/migrations/*.ts'
+    TYPEORM_MIGRATIONS_DIR=src/database/migrations/
+    TYPEORM_MIGRATIONS_TABLE_NAME=migrations
+    JWT_SECRET=your-secret
    ```
-4. Install NPM packages
+
+4. Create a .env file in the client folder and paste this variables:
+
+```js
+  REACT_APP_HTTP_SERVER=http://localhost:8080/v1
+  REACT_APP_STATIC_FILES=http://localhost:8080/
+```
+
+4. Install NPM packages in server and client folder:
    ```sh
-   npm install
+   npm run install
    ```
-5. Run the server in development mode
+5. Run Server and Client to the same time:
    ```sh
-   npm run start:dev
+   npm run watch
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -154,32 +179,6 @@ _To run this project, please follow the steps below to Node.js._
 <hr>
 <br>
 <br>
-
-### Installation React
-
-<a id="installation2"></a>
-_To run this project, please follow the steps below to React._
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/cristian2213/e-commerce-api.git
-   ```
-2. Run services
-   ```sh
-   docker-compose up -d
-   ```
-3. Create a .env file in the root and paste this variables:
-   ```js
-   APP_PORT = 3000;
-   ```
-4. Install NPM packages
-   ```sh
-   npm install
-   ```
-5. Run the server in development mode
-   ```sh
-   npm run start:dev
-   ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
